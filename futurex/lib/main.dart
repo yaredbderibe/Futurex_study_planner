@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:futurex/features/pages/home/home_page.dart';
 import 'package:futurex/route_handler/pages.dart';
 import 'package:futurex/services/global.dart';
@@ -46,11 +47,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [...NamedRouteSettings.allBlocProviders(context)],
-      child: const MaterialApp(
-        onGenerateRoute: NamedRouteSettings.GenerateRouteSettings,
-        debugShowCheckedModeBanner: false,
+    return ScreenUtilInit(
+      child: MultiBlocProvider(
+        providers: [...NamedRouteSettings.allBlocProviders(context)],
+        child: const MaterialApp(
+          onGenerateRoute: NamedRouteSettings.GenerateRouteSettings,
+          debugShowCheckedModeBanner: false,
+        ),
       ),
     );
   }

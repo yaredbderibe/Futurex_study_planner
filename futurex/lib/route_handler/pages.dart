@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:futurex/features/pages/home/bloc/home_bloc.dart';
 import 'package:futurex/features/pages/home/home_page.dart';
-import 'package:futurex/features/pages/welcome_page.dart';
-import 'package:futurex/features/pages/welcome_profile_setup_page_1.dart';
-import 'package:futurex/features/pages/welcome_profile_setup_page_2.dart';
+import 'package:futurex/features/pages/welcome%20page/welcome_page.dart';
+import 'package:futurex/features/pages/welcome%20page/welcome_profile_setup_page_1.dart';
+import 'package:futurex/features/pages/welcome%20page/welcome_profile_setup_page_2.dart';
 import 'package:futurex/route_handler/name.dart';
 import 'package:futurex/services/global.dart';
 
