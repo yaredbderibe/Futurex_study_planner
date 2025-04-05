@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:futurex/features/pages/home/bloc/home_bloc.dart';
 import 'package:futurex/features/pages/home/home_page.dart';
+import 'package:futurex/features/pages/index.dart';
+import 'package:futurex/features/pages/quiz/quiz_bloc/quiz_bloc.dart';
+import 'package:futurex/features/pages/quiz/quiz_page.dart';
 import 'package:futurex/features/pages/welcome%20page/welcome_page.dart';
+import 'package:futurex/features/pages/welcome%20page/welcome_page_2_bloc/welcome_page_2_bloc.dart';
+import 'package:futurex/features/pages/welcome%20page/welcome_prfile_setup_page_3.dart';
 import 'package:futurex/features/pages/welcome%20page/welcome_profile_setup_page_1.dart';
 import 'package:futurex/features/pages/welcome%20page/welcome_profile_setup_page_2.dart';
 import 'package:futurex/route_handler/name.dart';
 import 'package:futurex/services/global.dart';
+
+import '../features/pages/welcome page/welcome_page_1_bloc/welcome_profile_setup_bloc.dart';
 
 class NamedRouteSettings {
   NamedRouteSettings({required BuildContext context});
@@ -19,17 +26,45 @@ class NamedRouteSettings {
       ),
       pageEntity(
         route: NamedRoutes.WELCOMEPROFILESETUPPAGE_1,
-        page: const Welcome_Profile_Setup_Page_1(),
-        // bloc: BlocProvider(
-        //   create: (_) => SigninBloc(),
-        // ),
+        page: Welcome_Profile_Setup_Page_1(),
+        bloc: BlocProvider(
+          create: (_) => WelcomeProfileSetupBloc(),
+        ),
       ),
       pageEntity(
         route: NamedRoutes.WELCOMEPROFILESETUPPAGE_2,
-        page: const Welcome_Profile_Setup_Page_2(),
+        page:  Welcome_Profile_Setup_Page_2(),
+        bloc: BlocProvider(
+          create: (_) => WelcomePage2Bloc(),
+        ),
+      ),
+      pageEntity(
+        route: NamedRoutes.HOMEPAGE,
+        page:  Home_Page(),
         bloc: BlocProvider(
           create: (_) => HomeBloc(),
         ),
+      ),
+      pageEntity(
+        route: NamedRoutes.INDEXPAGE,
+        page:  Index_Page(),
+        // bloc: BlocProvider(
+        //   create: (_) => WelcomePage2Bloc(),
+        // ),
+      ),
+      pageEntity(
+        route: NamedRoutes.HOMEPAGE,
+        page:  Quiz_Page(),
+        bloc: BlocProvider(
+          create: (_) => QuizBloc(),
+        ),
+      ),
+      pageEntity(
+        route: NamedRoutes.WELCOMEPROFILESETUPPAGE_3,
+        page:  Welcome_Page_3(),
+        // bloc: BlocProvider(
+        //   create: (_) => QuizBloc(),
+        // ),
       ),
     ];
   }

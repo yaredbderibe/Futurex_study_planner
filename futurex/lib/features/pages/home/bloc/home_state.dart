@@ -1,6 +1,10 @@
 part of 'home_bloc.dart';
 
-@immutable
-sealed class HomeState {}
-
-final class HomeInitial extends HomeState {}
+class HomeState{
+  List<TodoObject>? todo;
+  int? index;
+  HomeState({
+    this.todo,
+    this.index,
+});
+}

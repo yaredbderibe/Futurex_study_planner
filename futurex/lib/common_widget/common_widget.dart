@@ -45,7 +45,7 @@ class ReusableText extends StatelessWidget {
   ReusableText({
     super.key,
     required this.TextString,
-    this.TextColor = ColorCollections.TeritiaryColor,
+    this.TextColor = ColorCollections.PrimaryColor,
     required this.FontSize,
     this.TextFontWeight = FontWeight.w500,
     this.FromTop = 5,
@@ -145,7 +145,7 @@ Widget reusableTextField({
   double FromLeft = 0,
 }) {
   return Container(
-    height: 35.h,
+    height: 38.h,
     // width: WidthOfContainer.w,
     margin: EdgeInsets.only(
       top: FromTop.w,
