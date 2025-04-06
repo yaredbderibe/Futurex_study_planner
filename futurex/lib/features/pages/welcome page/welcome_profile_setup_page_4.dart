@@ -14,60 +14,51 @@ class _Welcome_Page_4State extends State<Welcome_Page_4> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
       body: Container(
         margin: EdgeInsets.all(15),
         child: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: LinearProgressBar(
-                maxSteps: 5,
-                progressType:
-                LinearProgressBar.progressTypeLinear, // Use Linear progress
-                currentStep: 4,
-                progressColor: Colors.blue,
-                backgroundColor: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(10), //  NEW
-              ),
-            ),
+            buildStepProgressBar(4, 5), // 3 filled steps out of 5
             Center(
               child: ReusableText(
-                FromTop: 50,
+                FromTop: 70,
                 TextColor: ColorCollections.Black,
                 TextString: "Course Difficulty Ranking",
-                FontSize: 23,
-                TextFontWeight: FontWeight.bold,
+                FontSize: 25,
+                TextFontWeight: FontWeight.w900,
               ),
             ),
             Center(
               child: ReusableText(
                 FromTop: 10,
                 FromBottom: 0,
-                TextColor: ColorCollections.Black,
-                TextString: "Please rank your courses from most ",
-                FontSize: 18,
+                TextColor: Colors.grey.shade600,
+                TextString: "Please order your courses from most difficult",
+                FontSize: 16,
                 TextFontWeight: FontWeight.w400,
               ),
             ),
             Center(
               child: ReusableText(
                 // FromTop: 50,
-                TextColor: ColorCollections.Black,
-                TextString: "difficult (top) to least difficult (bottom).",
-                FontSize: 18,
+                TextColor: Colors.grey.shade600,
+                TextString: " (top) to least difficult (bottom).",
+                FontSize: 16,
                 TextFontWeight: FontWeight.w400,
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 40,
+            ),
             ReorderableListView(
               shrinkWrap: true,
               children: [
-                for (int i=0;i<courses.length;i++)
+                for (int i = 0; i < courses.length; i++)
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey.shade100)
-                    ),
+                        border: Border.all(color: Colors.grey.shade100)),
                     key: ValueKey(courses[i]),
                     height: 90,
                     child: Row(
@@ -92,15 +83,9 @@ class _Welcome_Page_4State extends State<Welcome_Page_4> {
                                   TextString: courses[i],
                                   FontSize: 18,
                                   TextFontWeight: FontWeight.w700,
+                                  FromLeft: 10,
+                                  FromTop: 30,
                                 ),
-                              ),
-                              ReusableText(
-                                FromTop: 0,
-                                FromBottom: 0,
-                                TextColor: Colors.black54,
-                                TextString: "CS401",
-                                FontSize: 14,
-                                TextFontWeight: FontWeight.w500,
                               ),
                             ],
                           ),
@@ -110,10 +95,10 @@ class _Welcome_Page_4State extends State<Welcome_Page_4> {
                           child: Row(
                             children: [
                               IconButton(
-                                color:Colors.black,
+                                color: Colors.black,
                                 onPressed: () {
-                                  if(i>0){
-                                    updateMySubjectPosition(i,i-1);
+                                  if (i > 0) {
+                                    updateMySubjectPosition(i, i - 1);
                                   }
                                 },
                                 icon: Icon(
@@ -122,7 +107,7 @@ class _Welcome_Page_4State extends State<Welcome_Page_4> {
                                 ),
                               ),
                               IconButton(
-                                onPressed: (){
+                                onPressed: () {
                                   if (i < courses.length - 1) {
                                     updateMySubjectPosition(i, i + 1);
                                   }
@@ -142,19 +127,27 @@ class _Welcome_Page_4State extends State<Welcome_Page_4> {
               onReorder: (oldIndex, newIndex) =>
                   updateMySubjectPosition(oldIndex, newIndex),
             ),
-            reusableButtonContainer(context,"Continue",Colors.blue,Colors.white),
-            reusableButtonContainer(context,"Back",Colors.white,Colors.black54),
+            reusableButtonContainer(
+                context, "Continue", ColorCollections.ThemeColor, Colors.white),
+            reusableButtonContainer(
+                context, "Back", Colors.white, Colors.black54),
           ],
         ),
       ),
     );
   }
+
   final List courses = [
-    "Introduction to Computer ",
-    "Data Structures and Algorithm ",
-    "Database Systems ",
-    "Web Development",
-    "Artificial Intelligence",
+    "Mathematics",
+    "English",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "Civics and Ethical Education",
+    "Geography",
+    "History",
+    "Information Technology",
+    "SAT",
   ];
 
   void updateMySubjectPosition(int oldIndex, int newIndex) {

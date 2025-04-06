@@ -14,6 +14,7 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
       body: Container(
         margin: EdgeInsets.all(15),
         child: ListView(
@@ -22,11 +23,11 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
 
             Center(
               child: ReusableText(
-                FromTop: 50,
+                FromTop: 70,
                 TextColor: ColorCollections.Black,
                 TextString: "Learning Style",
-                FontSize: 23,
-                TextFontWeight: FontWeight.bold,
+                FontSize: 25,
+                TextFontWeight: FontWeight.w900,
               ),
             ),
             Center(
@@ -35,8 +36,8 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
                 FromBottom: 0,
                 TextColor: Colors.grey.shade700,
                 TextString: "Rank your preferred learning methods",
-                FontSize: 18,
-                TextFontWeight: FontWeight.w400,
+                FontSize: 16,
+                TextFontWeight: FontWeight.w500,
               ),
             ),
             Center(
@@ -44,10 +45,11 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
                 // FromTop: 50,
                 TextColor: Colors.grey.shade700,
                 TextString: "Top being your most favorite",
-                FontSize: 18,
-                TextFontWeight: FontWeight.w400,
+                FontSize: 16,
+                TextFontWeight: FontWeight.w500,
               ),
             ),
+
             ReorderableListView(
               shrinkWrap: true,
               children: [
@@ -78,7 +80,7 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
                                     const EdgeInsets.only(right: 15, left: 10),
                                 child: Icon(
                                   icons[i],
-                                  color: Colors.blue,
+                                  color: ColorCollections.ThemeColor,
                                   size: 30,
                                 ),
                               ),
@@ -133,7 +135,7 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
                   updateMySubjectPosition(oldIndex, newIndex),
             ),
             reusableButtonContainer(
-                context, "Continue", Colors.blue, Colors.white),
+                context, "Continue", ColorCollections.ThemeColor, Colors.white),
             reusableButtonContainer(
                 context, "Back", Colors.white, Colors.black54),
           ],
@@ -197,4 +199,38 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
       ),
     );
   }
+}
+
+Widget reusableButtonContainer(
+    BuildContext context, String content, Color contColor, Color txtColor) {
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(10),
+    child: InkWell(
+      splashColor: Colors.white.withOpacity(0.2), // optional: customize splash
+      onTap: () {
+        if (content == "Back") {
+          // Navigator.pop(context);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/welcome_profile_setup_4_page', (predicate) => true);
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 20, right: 3, left: 3),
+        height: 55,
+        decoration: BoxDecoration(
+          color: contColor,
+          border: Border.all(color: Colors.grey.shade300),
+        ),
+        child: Center(
+          child: ReusableText(
+            TextColor: txtColor,
+            FromRight: 10,
+            TextString: content,
+            FontSize: 18,
+          ),
+        ),
+      ),
+    ),
+  );
 }

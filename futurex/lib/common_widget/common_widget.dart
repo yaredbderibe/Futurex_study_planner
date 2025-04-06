@@ -66,7 +66,7 @@ class ReusableText extends StatelessWidget {
       child: Text(
         TextString,
         overflow: TextOverflow.fade,
-        style: GoogleFonts.quicksand(
+        style: GoogleFonts.lato(
           color: TextColor,
           fontSize: FontSize,
           fontWeight: TextFontWeight,
@@ -142,7 +142,7 @@ Widget reusableTextField({
   double FromTop = 0,
   double FromBottom = 0,
   double FromRight = 0,
-  double FromLeft = 0,
+  double FromLeft = 0, 
 }) {
   return Container(
     height: 38.h,
@@ -542,7 +542,7 @@ CustomShowDialoge(BuildContext context) {
                 Center(
                   child: ReusableText(
                     TextString:
-                       " AppLocalizations.of(context)!.youHaveSuccessfully",
+                        " AppLocalizations.of(context)!.youHaveSuccessfully",
                     FontSize: 20,
                   ),
                 ),
@@ -559,7 +559,7 @@ CustomShowDialoge(BuildContext context) {
                   children: [
                     ReusableText(
                       FromLeft: 15,
-                      TextString:" AppLocalizations.of(context)!.category",
+                      TextString: " AppLocalizations.of(context)!.category",
                       FontSize: 15,
                       TextColor: ColorCollections.Black,
                     ),
@@ -592,7 +592,8 @@ CustomShowDialoge(BuildContext context) {
                       decoration: BoxDecoration(
                           color: ColorCollections.SecondaryColor,
                           borderRadius: BorderRadius.circular(5)),
-                      child: ReusableText(TextString: "item_name", FontSize: 16),
+                      child:
+                          ReusableText(TextString: "item_name", FontSize: 16),
                     )
                   ],
                 ),
@@ -714,21 +715,21 @@ Drawer CustomDrowerElement(
             child: Column(
               children: [
                 DrowerWidget(
-                    Icons.settings, "AppLocalizations.of(context)!.settings", () {
+                    Icons.settings, "AppLocalizations.of(context)!.settings",
+                    () {
                   Navigator.of(context).pushNamed('/welcome_page');
                 }),
                 DrowerWidget(Icons.language_outlined,
                     "AppLocalizations.of(context)!.language", () {
                   Navigator.of(context).pushNamed('/language_page');
                 }),
-                DrowerWidget(Icons.info, "AppLocalizations.of(context)!.aboutUs",
-                    () {
+                DrowerWidget(
+                    Icons.info, "AppLocalizations.of(context)!.aboutUs", () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       '/about_us_page', (route) => false);
                 }),
-                DrowerWidget(
-                    Icons.logout_outlined, "AppLocalizations.of(context)!.logOut",
-                    () {
+                DrowerWidget(Icons.logout_outlined,
+                    "AppLocalizations.of(context)!.logOut", () {
                   Global.storageServices.setDeviceOpenedFirst(
                       AppConstants.STORAGE_DEVICE_OPENED_FIRST, false);
                   LogoutShowDialogue(context);
@@ -817,7 +818,7 @@ LogoutShowDialogue(BuildContext context) {
                         ReusableText(
                           TextColor: ColorCollections.Black,
                           TextString:
-                             " AppLocalizations.of(context)!.areYouSureLogout",
+                              " AppLocalizations.of(context)!.areYouSureLogout",
                           FontSize: 19,
                         ),
                       ],
@@ -842,7 +843,7 @@ LogoutShowDialogue(BuildContext context) {
                             child: Center(
                               child: ReusableText(
                                 TextString:
-                                   " AppLocalizations.of(context)!.confirm",
+                                    " AppLocalizations.of(context)!.confirm",
                                 FontSize: 18,
                                 TextColor: Colors.red.shade900,
                               ),
@@ -880,7 +881,6 @@ LogoutShowDialogue(BuildContext context) {
         );
       });
 }
-
 
 Widget buildStepProgressBar(int currentStep, int totalSteps) {
   return Row(

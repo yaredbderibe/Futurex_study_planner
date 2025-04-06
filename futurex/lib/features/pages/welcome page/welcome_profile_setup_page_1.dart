@@ -7,40 +7,30 @@ import 'package:futurex/utils/color_collections.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 
 class Welcome_Profile_Setup_Page_1 extends StatelessWidget {
-   Welcome_Profile_Setup_Page_1({super.key});
+  Welcome_Profile_Setup_Page_1({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.grey.shade100,
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: LinearProgressBar(
-                maxSteps: 5,
-                progressType:
-                    LinearProgressBar.progressTypeLinear, // Use Linear progress
-                currentStep: 1,
-                progressColor: Colors.blue,
-                backgroundColor: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(10), //  NEW
-              ),
-            ),
+            buildStepProgressBar(1, 5),
             ReusableText(
-              TextColor: Colors.blue.shade600,
+              TextColor: Colors.black,
               FromLeft: 15,
               FromRight: 10,
               FromTop: 130,
-              TextString: "Set your profile",
+              TextString: "Welcome!",
               FontSize: 25,
-              TextFontWeight: FontWeight.bold,
+              TextFontWeight: FontWeight.w900,
             ),
             Row(
               children: [
                 ReusableText(
                   TextColor: Colors.black,
-                  FromLeft: 15,
+                  FromLeft: 22,
                   FromRight: 10,
                   FromTop: 50,
                   TextString: "Your name",
@@ -61,9 +51,10 @@ class Welcome_Profile_Setup_Page_1 extends StatelessWidget {
               children: [
                 ReusableText(
                   TextColor: Colors.black,
-                  FromLeft: 15,
+                  FromLeft: 22,
                   FromRight: 10,
                   FromTop: 20,
+                  FromBottom: 0,
                   TextString: "Your grade",
                   FontSize: 18,
                   // TextFontWeight: FontWeight.bold,
@@ -97,20 +88,24 @@ class Welcome_Profile_Setup_Page_1 extends StatelessWidget {
                                   value: index,
                                   contColor: Colors.blue,
                                   txxtColor: Colors.white,
-                                  content: contentOfButton[index] ));
+                                  content: contentOfButton[index]));
                         },
                         child: Container(
                           margin: EdgeInsets.only(right: 4),
                           height: 40.h,
                           width: 110.w,
                           decoration: BoxDecoration(
-                            color: index==state.value ? state.contColor : Colors.white,
+                            color: index == state.value
+                                ? state.contColor
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(color: Colors.grey.shade200),
                           ),
                           child: Center(
                             child: ReusableText(
-                              TextColor: index==state.value ? state.txtColor : Colors.black,
+                              TextColor: index == state.value
+                                  ? state.txtColor
+                                  : Colors.black,
                               // FromTop: 50,
                               TextString: contentOfButton[index],
                               FontSize: 18,
@@ -125,8 +120,9 @@ class Welcome_Profile_Setup_Page_1 extends StatelessWidget {
               },
             ),
             InkWell(
-              onTap: (){
-                Navigator.pushNamedAndRemoveUntil(context, '/welcome_profile_setup_2_page', (predicate)=>true);
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(context,
+                    '/welcome_profile_setup_2_page', (predicate) => true);
               },
               child: Container(
                 margin: EdgeInsets.only(top: 40),
@@ -181,6 +177,7 @@ class Welcome_Profile_Setup_Page_1 extends StatelessWidget {
       ),
     );
   }
+
   List<String> contentOfButton = [
     "Grade 10",
     "Grade 11",

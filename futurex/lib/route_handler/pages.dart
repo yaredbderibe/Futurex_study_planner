@@ -35,49 +35,49 @@ class NamedRouteSettings {
       ),
       pageEntity(
         route: NamedRoutes.WELCOMEPROFILESETUPPAGE_2,
-        page:  Welcome_Profile_Setup_Page_2(),
+        page: Welcome_Profile_Setup_Page_2(),
         bloc: BlocProvider(
           create: (_) => WelcomePage2Bloc(),
         ),
       ),
       pageEntity(
         route: NamedRoutes.HOMEPAGE,
-        page:  Home_Page(),
+        page: Home_Page(),
         bloc: BlocProvider(
           create: (_) => HomeBloc(),
         ),
       ),
       pageEntity(
         route: NamedRoutes.INDEXPAGE,
-        page:  Index_Page(),
+        page: Index_Page(),
         // bloc: BlocProvider(
         //   create: (_) => WelcomePage2Bloc(),
         // ),
       ),
       pageEntity(
         route: NamedRoutes.HOMEPAGE,
-        page:  Quiz_Page(),
+        page: Quiz_Page(),
         bloc: BlocProvider(
           create: (_) => QuizBloc(),
         ),
       ),
       pageEntity(
         route: NamedRoutes.WELCOMEPROFILESETUPPAGE_3,
-        page:  Welcome_Page_3(),
+        page: Welcome_Page_3(),
         // bloc: BlocProvider(
         //   create: (_) => QuizBloc(),
         // ),
       ),
       pageEntity(
         route: NamedRoutes.WELCOMEPROFILESETUPPAGE_4,
-        page:  Welcome_Page_4(),
+        page: Welcome_Page_4(),
         // bloc: BlocProvider(
         //   create: (_) => QuizBloc(),
         // ),
       ),
       pageEntity(
         route: NamedRoutes.WELCOMEPROFILESETUPPAGE_5,
-        page:  Welcome_Page_5(),
+        page: Welcome_Page_5(),
         // bloc: BlocProvider(
         //   create: (_) => QuizBloc(),
         // ),

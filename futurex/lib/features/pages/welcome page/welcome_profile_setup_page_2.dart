@@ -30,30 +30,19 @@ class _Welcome_Profile_Setup_Page_2State
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: Colors.grey.shade50,
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: LinearProgressBar(
-                  maxSteps: 5,
-                  progressType: LinearProgressBar
-                      .progressTypeLinear, // Use Linear progress
-                  currentStep: 2,
-                  progressColor: Colors.blue,
-                  backgroundColor: Colors.blue.shade50,
-                  borderRadius: BorderRadius.circular(10), //  NEW
-                ),
-              ),
+              buildStepProgressBar(2, 5),
               Center(
                 child: ReusableText(
-                  FromTop: 50,
+                  FromTop: 70,
                   TextColor: ColorCollections.Black,
                   TextString: "Study Schedule",
-                  FontSize: 23,
-                  TextFontWeight: FontWeight.bold,
+                  FontSize: 25,
+                  TextFontWeight: FontWeight.w900,
                 ),
               ),
               Row(
@@ -61,7 +50,7 @@ class _Welcome_Profile_Setup_Page_2State
                 children: [
                   ReusableText(
                     FromTop: 10,
-                    TextColor: ColorCollections.Black,
+                TextColor: Colors.grey.shade600,
                     TextString: "Set your preferred study schedule to optimize",
                     FontSize: 16,
                     TextFontWeight: FontWeight.w500,
@@ -70,11 +59,11 @@ class _Welcome_Profile_Setup_Page_2State
               ),
               Center(
                 child: ReusableText(
-                  FromTop: 10,
+                  FromTop: 0,
                   TextColor: Colors.grey.shade700,
                   TextString: "your learning.",
                   FontSize: 16,
-                  TextFontWeight: FontWeight.w500,
+                  TextFontWeight: FontWeight.w400,
                 ),
               ),
               Container(
@@ -89,10 +78,11 @@ class _Welcome_Profile_Setup_Page_2State
                   children: [
                     ReusableText(
                       FromTop: 10,
-                      TextColor: Colors.grey.shade900,
-                      TextString: "Preferred study time",
+                      TextColor: Colors.black,
+                      TextString:
+                          "On what time of the day do you usually study?",
                       FontSize: 20,
-                      TextFontWeight: FontWeight.w500,
+                      TextFontWeight: FontWeight.w900,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -109,11 +99,11 @@ class _Welcome_Profile_Setup_Page_2State
                           textStyle: TextStyle(
                               color: Colors.grey.shade500, fontSize: 18),
                           selectedTextStyle: TextStyle(
-                              color: Colors.blue.shade500, fontSize: 20),
+                              color: ColorCollections.ThemeColor, fontSize: 20),
                           decoration: BoxDecoration(
                               // border: Border(
-                              //   top: BorderSide(color: Colors.blue),
-                              //   bottom: BorderSide(color: Colors.blue),
+                              //   top: BorderSide(color: ColorCollections.ThemeColor),
+                              //   bottom: BorderSide(color: ColorCollections.ThemeColor),
                               // ),
                               ),
                         ),
@@ -132,13 +122,13 @@ class _Welcome_Profile_Setup_Page_2State
                           textStyle: TextStyle(
                               color: Colors.grey.shade500, fontSize: 18),
                           selectedTextStyle: TextStyle(
-                              color: Colors.blue.shade500, fontSize: 20),
+                              color: ColorCollections.ThemeColor, fontSize: 20),
                           decoration: BoxDecoration(
                               // border: Border(
-                              //     top: BorderSide(color: Colors.blue),
-                              //     bottom: BorderSide(color: Colors.blue),
+                              //     top: BorderSide(color: ColorCollections.ThemeColor),
+                              //     bottom: BorderSide(color: ColorCollections.ThemeColor),
                               // ),
-                          ),
+                              ),
                         ),
                         Expanded(
                           child: Container(
@@ -156,8 +146,8 @@ class _Welcome_Profile_Setup_Page_2State
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: timeFormat == "AM"
-                                          ? Colors.blue
-                                          : Colors.blue.shade300,
+                                          ? ColorCollections.ThemeColor
+                                          : Colors.blue.shade100,
                                     ),
                                     child: Center(
                                       child: ReusableText(
@@ -180,8 +170,8 @@ class _Welcome_Profile_Setup_Page_2State
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: timeFormat == "PM"
-                                          ? Colors.blue
-                                          : Colors.blue.shade300,
+                                          ? ColorCollections.ThemeColor
+                                          : Colors.blue.shade100,
                                     ),
                                     child: Center(
                                       child: ReusableText(
@@ -202,7 +192,7 @@ class _Welcome_Profile_Setup_Page_2State
               ),
               Container(
                 margin: const EdgeInsets.only(top: 20),
-                padding: const EdgeInsets.only(left: 20, top: 10,bottom: 30),
+                padding: const EdgeInsets.only(left: 20, top: 10, bottom: 30),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -214,7 +204,8 @@ class _Welcome_Profile_Setup_Page_2State
                       FromTop: 10,
                       FromBottom: 10,
                       TextColor: ColorCollections.Black,
-                      TextString: "Study Duration(hour)",
+                      TextString:
+                          "For how long do you usually study in weekdays?",
                       FontSize: 20,
                       TextFontWeight: FontWeight.w600,
                     ),
@@ -231,12 +222,14 @@ class _Welcome_Profile_Setup_Page_2State
                                 disabledThumbRadius: 12,
                                 elevation: 4,
                               ),
-                              activeTrackColor: Colors.blue.shade100,
-                              inactiveTrackColor: Colors.blue.shade100,
-                              thumbColor: Colors.blue,
-                              overlayColor: Colors.blue.withOpacity(0.2),
-                              valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                              valueIndicatorColor: Colors.blue,
+                              activeTrackColor: Colors.grey.shade200,
+                              inactiveTrackColor: Colors.grey.shade200,
+                              thumbColor: ColorCollections.ThemeColor,
+                              overlayColor:
+                                  ColorCollections.ThemeColor.withOpacity(0.2),
+                              valueIndicatorShape:
+                                  PaddleSliderValueIndicatorShape(),
+                              valueIndicatorColor: ColorCollections.ThemeColor,
                               valueIndicatorTextStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -261,17 +254,21 @@ class _Welcome_Profile_Setup_Page_2State
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(7, (index) => Text(
-                              '$index',
-                              style: TextStyle(
-                                color: StudyDurationHour.round() == index
-                                    ? Colors.blue
-                                    : Colors.grey,
-                                fontWeight: StudyDurationHour.round() == index
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                              ),
-                            )),
+                            children: List.generate(
+                                7,
+                                (index) => Text(
+                                      '$index',
+                                      style: TextStyle(
+                                        color:
+                                            StudyDurationHour.round() == index
+                                                ? ColorCollections.ThemeColor
+                                                : Colors.grey,
+                                        fontWeight:
+                                            StudyDurationHour.round() == index
+                                                ? FontWeight.bold
+                                                : FontWeight.normal,
+                                      ),
+                                    )),
                           ),
                         ),
                       ],
@@ -281,7 +278,7 @@ class _Welcome_Profile_Setup_Page_2State
               ),
               Container(
                 margin: const EdgeInsets.only(top: 20),
-                padding: const EdgeInsets.only(left: 20, top: 10,bottom: 30),
+                padding: const EdgeInsets.only(left: 20, top: 10, bottom: 30),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -293,7 +290,8 @@ class _Welcome_Profile_Setup_Page_2State
                       FromTop: 10,
                       FromBottom: 10,
                       TextColor: ColorCollections.Black,
-                      TextString: "Weekend Study Duration(hour)",
+                      TextString:
+                          "For how long do you usually study in weekdays?",
                       FontSize: 20,
                       TextFontWeight: FontWeight.w600,
                     ),
@@ -310,12 +308,14 @@ class _Welcome_Profile_Setup_Page_2State
                                 disabledThumbRadius: 12,
                                 elevation: 4,
                               ),
-                              activeTrackColor: Colors.blue.shade100,
-                              inactiveTrackColor: Colors.blue.shade100,
-                              thumbColor: Colors.blue,
-                              overlayColor: Colors.blue.withOpacity(0.2),
-                              valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                              valueIndicatorColor: Colors.blue,
+                              activeTrackColor: Colors.grey.shade200,
+                              inactiveTrackColor: Colors.grey.shade200,
+                              thumbColor: ColorCollections.ThemeColor,
+                              overlayColor:
+                                  ColorCollections.ThemeColor.withOpacity(0.2),
+                              valueIndicatorShape:
+                                  PaddleSliderValueIndicatorShape(),
+                              valueIndicatorColor: ColorCollections.ThemeColor,
                               valueIndicatorTextStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -340,17 +340,21 @@ class _Welcome_Profile_Setup_Page_2State
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(7, (index) => Text(
-                              '$index',
-                              style: TextStyle(
-                                color: StudyDurationHour.round() == index
-                                    ? Colors.blue
-                                    : Colors.grey,
-                                fontWeight: StudyDurationHour.round() == index
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                              ),
-                            )),
+                            children: List.generate(
+                                7,
+                                (index) => Text(
+                                      '$index',
+                                      style: TextStyle(
+                                        color:
+                                            StudyDurationHour.round() == index
+                                                ? ColorCollections.ThemeColor
+                                                : Colors.grey,
+                                        fontWeight:
+                                            StudyDurationHour.round() == index
+                                                ? FontWeight.bold
+                                                : FontWeight.normal,
+                                      ),
+                                    )),
                           ),
                         ),
                       ],
@@ -358,78 +362,82 @@ class _Welcome_Profile_Setup_Page_2State
                   ],
                 ),
               ),
-               Container(
-                 margin: const EdgeInsets.only(top: 20),
-                 padding: const EdgeInsets.only(left: 20, top: 10,bottom: 30,right: 20),
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(10),
-                   color: Colors.white,
-                 ),
-                 child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     ReusableText(
-                             FromTop: 20,
-                             FromBottom: 30,
-                             TextColor: ColorCollections.Black,
-                             TextString: "Rest Day",
-                             FontSize: 18,
-                             TextFontWeight: FontWeight.w700,
-                           ),
-                     DropdownMenu(
-                         width: double.infinity,
-                         onSelected: (value) {
-                           setState(() {});
-                         },
-                         initialSelection: "None",
-                         inputDecorationTheme: const InputDecorationTheme(
-                           border: OutlineInputBorder(
-                             borderSide: BorderSide(color: Colors.white), // Border color
-                           ),
-                           enabledBorder: OutlineInputBorder(
-                             borderSide: BorderSide(color: Colors.white), // Unfocused border
-                           ),
-                           focusedBorder: OutlineInputBorder(
-                             borderSide: BorderSide(color: Colors.white), // Focused border
-                           ),
-                         ),
-                         dropdownMenuEntries: const[
-                           DropdownMenuEntry(
-                             value: "Monday",
-                             label: "Monday",
-                           ),
-                           DropdownMenuEntry(
-                             value: "Tuesday",
-                             label: "Tuesday",
-                           ),
-                           DropdownMenuEntry(
-                             value: "Wendsday",
-                             label: "Wendsday",
-                           ),
-                           DropdownMenuEntry(
-                             value: "Thursday",
-                             label: "Thursday",
-                           ),
-                           DropdownMenuEntry(
-                             value: "Friday",
-                             label: "Friday",
-                           ),
-                           DropdownMenuEntry(
-                             value: "Saturday",
-                             label: "Saturday",
-                           ),
-                           DropdownMenuEntry(
-                             value: "Sunday",
-                             label: "Sunday",
-                           ),
-                           DropdownMenuEntry(
-                             value: "None",
-                             label: "None",
-                           ),
-                         ]),
-                   ],
-                 ),
-               ),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(
+                    left: 20, top: 10, bottom: 30, right: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ReusableText(
+                      FromTop: 20,
+                      FromBottom: 30,
+                      TextColor: ColorCollections.Black,
+                      TextString: "Rest Day",
+                      FontSize: 18,
+                      TextFontWeight: FontWeight.w700,
+                    ),
+                    DropdownMenu(
+                        width: double.infinity,
+                        onSelected: (value) {
+                          setState(() {});
+                        },
+                        initialSelection: "None",
+                        inputDecorationTheme: const InputDecorationTheme(
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.white), // Border color
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.white), // Unfocused border
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.white), // Focused border
+                          ),
+                        ),
+                        dropdownMenuEntries: const [
+                          DropdownMenuEntry(
+                            value: "Monday",
+                            label: "Monday",
+                          ),
+                          DropdownMenuEntry(
+                            value: "Tuesday",
+                            label: "Tuesday",
+                          ),
+                          DropdownMenuEntry(
+                            value: "Wendsday",
+                            label: "Wendsday",
+                          ),
+                          DropdownMenuEntry(
+                            value: "Thursday",
+                            label: "Thursday",
+                          ),
+                          DropdownMenuEntry(
+                            value: "Friday",
+                            label: "Friday",
+                          ),
+                          DropdownMenuEntry(
+                            value: "Saturday",
+                            label: "Saturday",
+                          ),
+                          DropdownMenuEntry(
+                            value: "Sunday",
+                            label: "Sunday",
+                          ),
+                          DropdownMenuEntry(
+                            value: "None",
+                            label: "None",
+                          ),
+                        ]),
+                  ],
+                ),
+              ),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
               //   children: [
@@ -448,11 +456,11 @@ class _Welcome_Profile_Setup_Page_2State
               //       textStyle:
               //           TextStyle(color: Colors.grey.shade500, fontSize: 18),
               //       selectedTextStyle:
-              //           TextStyle(color: Colors.blue.shade500, fontSize: 20),
+              //           TextStyle(color: ColorCollections.ThemeColor.shade500, fontSize: 20),
               //       decoration: BoxDecoration(
               //           border: Border(
-              //               top: BorderSide(color: Colors.blue),
-              //               bottom: BorderSide(color: Colors.blue))),
+              //               top: BorderSide(color: ColorCollections.ThemeColor),
+              //               bottom: BorderSide(color: ColorCollections.ThemeColor))),
               //     ),
 
               // Row(
@@ -484,18 +492,18 @@ class _Welcome_Profile_Setup_Page_2State
               //       textStyle:
               //           TextStyle(color: Colors.grey.shade500, fontSize: 18),
               //       selectedTextStyle:
-              //           TextStyle(color: Colors.blue.shade500, fontSize: 20),
+              //           TextStyle(color: ColorCollections.ThemeColor.shade500, fontSize: 20),
               //       decoration: BoxDecoration(
               //         // border: Border(
-              //         //   top: BorderSide(color: Colors.blue),
-              //         //   bottom: BorderSide(color: Colors.blue),
+              //         //   top: BorderSide(color: ColorCollections.ThemeColor),
+              //         //   bottom: BorderSide(color: ColorCollections.ThemeColor),
               //         // ),
               //       ),
               //     ),
               //   ],
               // ),
-              reusableButtonContainer(
-                  context, "Continue", Colors.blue, Colors.white),
+              reusableButtonContainer(context, "Continue",
+                  ColorCollections.ThemeColor, Colors.white),
               reusableButtonContainer(
                   context, "Back", Colors.white, Colors.black),
             ],

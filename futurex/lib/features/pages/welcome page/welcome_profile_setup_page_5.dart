@@ -14,79 +14,77 @@ class _Welcome_Page_5State extends State<Welcome_Page_5> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         body: Container(
-           margin: EdgeInsets.all(15),
-           child: ListView(
-             children: [
-               LinearProgressBar(
-                 maxSteps: 5,
-                 progressType:
-                 LinearProgressBar.progressTypeLinear, // Use Linear progress
-                 currentStep: 5,
-                 progressColor: Colors.blue,
-                 backgroundColor: Colors.blue.shade50,
-                 borderRadius: BorderRadius.circular(10), //  NEW
-               ),
-               Center(
-                 child: ReusableText(
-                   FromTop: 50,
-                   TextColor: ColorCollections.Black,
-                   TextString: "Course Difficulty Ranking",
-                   FontSize: 23,
-                   TextFontWeight: FontWeight.bold,
-                 ),
-               ),
-               Center(
-                 child: ReusableText(
-                   FromTop: 10,
-                   FromBottom: 0,
-                   TextColor: ColorCollections.Black,
-                   TextString: "Select the date of your Final Exam this can",
-                   FontSize: 17,
-                   TextFontWeight: FontWeight.w400,
-                 ),
-               ),
-               Center(
-                 child: ReusableText(
-                   // FromTop: 50,
-                   TextColor: ColorCollections.Black,
-                   TextString: " be modified later in settings",
-                   FontSize: 17,
-                   TextFontWeight: FontWeight.w400,
-                 ),
-               ),
-               InkWell(
-                 onTap: ()=>_selectDate(),
-                 child: Container(
-                   margin: EdgeInsets.only(top: 50),
-                   height: 60,
-                   decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(10),
-                     border: Border.all(color: Colors.grey.shade300),
-                   ),
-                   child:Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                     children: [
-                       ReusableText(
-                         // FromTop: 50,
-                         TextColor: ColorCollections.Black,
-                         TextString: "Select the final date",
-                         FontSize: 17,
-                         TextFontWeight: FontWeight.w400,
-                       ),
-                       Icon(Icons.calendar_month),
-                     ],
-                   ),
-                 ),
-               ),
-               SizedBox(height: 100,),
-               reusableButtonContainer(context,"Continue",Colors.blue,Colors.white),
-               reusableButtonContainer(context,"Back",Colors.white,Colors.black54),
-             ],
-           ),
-         ),
+      backgroundColor: Colors.grey.shade50,
+      body: Container(
+        margin: EdgeInsets.all(15),
+        child: ListView(
+          children: [
+            buildStepProgressBar(5, 5), // 4 filled steps out of 5
+            Center(
+              child: ReusableText(
+                FromTop: 70,
+                TextColor: ColorCollections.Black,
+                TextString: "Upcoming Final Exam",
+                FontSize: 25,
+                TextFontWeight: FontWeight.w900,
+              ),
+            ),
+            Center(
+              child: ReusableText(
+                FromTop: 30,
+                FromBottom: 0,
+                TextColor: Colors.grey.shade600,
+                TextString: "Select the date of your Final Exam this can",
+                FontSize: 16,
+                TextFontWeight: FontWeight.w400,
+              ),
+            ),
+            Center(
+              child: ReusableText(
+                // FromTop: 50,
+                TextColor: Colors.grey.shade600,
+                TextString: " be modified later in settings",
+                FontSize: 17,
+                TextFontWeight: FontWeight.w400,
+              ),
+            ),
+            InkWell(
+              onTap: () => _selectDate(),
+              child: Container(
+                margin: EdgeInsets.only(top: 50),
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ReusableText(
+                      // FromTop: 50,
+                      TextColor: ColorCollections.Black,
+                      TextString: "Select the final date",
+                      FontSize: 17,
+                      TextFontWeight: FontWeight.w400,
+                    ),
+                    Icon(Icons.calendar_month),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            reusableButtonContainer(
+                context, "Continue", Colors.blue, Colors.white),
+            reusableButtonContainer(
+                context, "Back", Colors.white, Colors.black54),
+          ],
+        ),
+      ),
     );
   }
+
   Future<void> _selectDate() async {
     DateTime? _picked = await showDatePicker(
       context: context,
