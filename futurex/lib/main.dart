@@ -7,8 +7,7 @@ import 'package:futurex/route_handler/pages.dart';
 import 'package:futurex/services/global.dart';
 import 'package:futurex/utils/color_collections.dart';
 
-void main() async{
-
+void main() async {
   AwesomeNotifications().initialize(
     "resource://drawable/res_futurex_notifications_icon",
     [
@@ -20,16 +19,18 @@ void main() async{
         channelShowBadge: true,
         playSound: true,
         // soundSource: "resource://raw/res_custom_notification",
-        channelDescription: "Basic notification enables the notification for Basic event like when item matched exists.",
+        channelDescription:
+            "Basic notification enables the notification for Basic event like when item matched exists.",
       ),
       NotificationChannel(
         channelKey: 'schedule_channel',
         channelName: 'Schedule Notification',
-        defaultColor:  ColorCollections.QuaterneryColor,
+        defaultColor: ColorCollections.QuaterneryColor,
         importance: NotificationImportance.High,
         channelShowBadge: true,
         locked: true,
-        channelDescription: "Schedule notification enables the notification for scheduled event like user not respond to the item matched.",
+        channelDescription:
+            "Schedule notification enables the notification for scheduled event like user not respond to the item matched.",
       ),
     ],
   );

@@ -18,50 +18,45 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
         margin: EdgeInsets.all(15),
         child: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: LinearProgressBar(
-                maxSteps: 5,
-                progressType:
-                    LinearProgressBar.progressTypeLinear, // Use Linear progress
-                currentStep: 3,
-                progressColor: Colors.blue,
-                backgroundColor: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(10), //  NEW
+            buildStepProgressBar(3, 5), // 2 filled steps out of 5
+
+            Center(
+              child: ReusableText(
+                FromTop: 50,
+                TextColor: ColorCollections.Black,
+                TextString: "Learning Style",
+                FontSize: 23,
+                TextFontWeight: FontWeight.bold,
               ),
             ),
-            ReusableText(
-              FromTop: 50,
-              TextColor: ColorCollections.Black,
-              TextString: "Course Difficulty Ranking",
-              FontSize: 23,
-              TextFontWeight: FontWeight.bold,
+            Center(
+              child: ReusableText(
+                FromTop: 10,
+                FromBottom: 0,
+                TextColor: Colors.grey.shade700,
+                TextString: "Rank your preferred learning methods",
+                FontSize: 18,
+                TextFontWeight: FontWeight.w400,
+              ),
             ),
-            ReusableText(
-              FromTop: 10,
-              FromBottom: 0,
-              TextColor: ColorCollections.Black,
-              TextString: "Please rank your courses from most ",
-              FontSize: 18,
-              TextFontWeight: FontWeight.w400,
-            ),
-            ReusableText(
-              // FromTop: 50,
-              TextColor: ColorCollections.Black,
-              TextString: "difficult (top) to least difficult (bottom).",
-              FontSize: 18,
-              TextFontWeight: FontWeight.w400,
+            Center(
+              child: ReusableText(
+                // FromTop: 50,
+                TextColor: Colors.grey.shade700,
+                TextString: "Top being your most favorite",
+                FontSize: 18,
+                TextFontWeight: FontWeight.w400,
+              ),
             ),
             ReorderableListView(
               shrinkWrap: true,
               children: [
-                for (int i=0;i<courses.length;i++)
+                for (int i = 0; i < preferredWay.length; i++)
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey.shade100)
-                    ),
-                    key: ValueKey(courses[i]),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey.shade100)),
+                    key: ValueKey(preferredWay[i]),
                     height: 90,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -74,26 +69,28 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
                           ),
                         ),
                         Expanded(
-                          child: Column(
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // SizedBox(),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 15, left: 10),
+                                child: Icon(
+                                  icons[i],
+                                  color: Colors.blue,
+                                  size: 30,
+                                ),
+                              ),
                               Container(
                                 // width: 220,
                                 child: ReusableText(
                                   // FromTop: 50,
                                   TextColor: Colors.black54,
-                                  TextString: courses[i],
+                                  TextString: preferredWay[i],
                                   FontSize: 18,
                                   TextFontWeight: FontWeight.w700,
                                 ),
-                              ),
-                              ReusableText(
-                                FromTop: 0,
-                                FromBottom: 0,
-                                TextColor: Colors.black54,
-                                TextString: "CS401",
-                                FontSize: 14,
-                                TextFontWeight: FontWeight.w500,
                               ),
                             ],
                           ),
@@ -103,10 +100,10 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
                           child: Row(
                             children: [
                               IconButton(
-                                color:Colors.black,
+                                color: Colors.black,
                                 onPressed: () {
-                                  if(i>0){
-                                    updateMySubjectPosition(i,i-1);
+                                  if (i > 0) {
+                                    updateMySubjectPosition(i, i - 1);
                                   }
                                 },
                                 icon: Icon(
@@ -115,8 +112,8 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
                                 ),
                               ),
                               IconButton(
-                                onPressed: (){
-                                  if (i < courses.length - 1) {
+                                onPressed: () {
+                                  if (i < preferredWay.length - 1) {
                                     updateMySubjectPosition(i, i + 1);
                                   }
                                 },
@@ -135,20 +132,26 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
               onReorder: (oldIndex, newIndex) =>
                   updateMySubjectPosition(oldIndex, newIndex),
             ),
-            reusableButtonContainer(context,"Continue",Colors.blue,Colors.white),
-            reusableButtonContainer(context,"Continue",Colors.white,Colors.black54),
+            reusableButtonContainer(
+                context, "Continue", Colors.blue, Colors.white),
+            reusableButtonContainer(
+                context, "Back", Colors.white, Colors.black54),
           ],
         ),
       ),
     );
   }
 
-  final List courses = [
-    "Introduction to Computer ",
-    "Data Structures and Algorithm ",
-    "Database Systems ",
-    "Web Development",
-    "Artificial Intelligence",
+  List<IconData> icons = [
+    Icons.video_call,
+    Icons.event_note_outlined,
+    Icons.menu_book
+  ];
+
+  final List preferredWay = [
+    "Video Lessons ",
+    "Short NoteD",
+    "Text book",
   ];
 
   void updateMySubjectPosition(int oldIndex, int newIndex) {
@@ -157,8 +160,8 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
         newIndex--;
       }
     });
-    final course = courses.removeAt(oldIndex);
-    courses.insert(newIndex, course);
+    final course = preferredWay.removeAt(oldIndex);
+    preferredWay.insert(newIndex, course);
   }
 
   Widget reusableButtonContainer(
@@ -168,8 +171,8 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
         if (content == "Back") {
           // Navigator.pop(context);
         } else {
-          // Navigator.pushNamedAndRemoveUntil(
-          //     context, '/index_page', (predicate) => true);
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/welcome_profile_setup_4_page', (predicate) => true);
         }
       },
       child: Container(
@@ -194,5 +197,4 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
       ),
     );
   }
-
 }

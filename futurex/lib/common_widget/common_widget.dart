@@ -880,3 +880,22 @@ LogoutShowDialogue(BuildContext context) {
         );
       });
 }
+
+
+Widget buildStepProgressBar(int currentStep, int totalSteps) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: List.generate(totalSteps, (index) {
+      return Expanded(
+        child: Container(
+          margin: EdgeInsets.only(top: 20, left: 5, right: 5),
+          height: 6,
+          decoration: BoxDecoration(
+            color: index < currentStep ? Colors.blue : Colors.grey[300],
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+      );
+    }),
+  );
+}
