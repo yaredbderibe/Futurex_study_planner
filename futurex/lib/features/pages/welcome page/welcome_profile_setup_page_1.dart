@@ -6,25 +6,43 @@ import 'package:futurex/features/pages/welcome%20page/welcome_page_1_bloc/welcom
 import 'package:futurex/utils/color_collections.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 
-class Welcome_Profile_Setup_Page_1 extends StatelessWidget {
+class Welcome_Profile_Setup_Page_1 extends StatefulWidget {
   Welcome_Profile_Setup_Page_1({super.key});
 
+  @override
+  State<Welcome_Profile_Setup_Page_1> createState() =>
+      _Welcome_Profile_Setup_Page_1State();
+}
+
+class _Welcome_Profile_Setup_Page_1State
+    extends State<Welcome_Profile_Setup_Page_1> {
+  String selectedGrade = 'None';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: Colors.grey.shade50,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildStepProgressBar(1, 5),
             ReusableText(
               TextColor: Colors.black,
               FromLeft: 15,
               FromRight: 10,
-              FromTop: 130,
-              TextString: "Welcome!",
-              FontSize: 25,
+              FromTop: 50,
+              TextString: "Tell Us About Yourself",
+              FontSize: 23,
               TextFontWeight: FontWeight.w900,
+            ),
+            ReusableText(
+              TextColor: ColorCollections.TeritiaryColor,
+              FromLeft: 15,
+              FromRight: 10,
+              FromTop: 10,
+              TextString: "We're getting to know you better. Almost there!",
+              FontSize: 16,
+              TextFontWeight: FontWeight.w400,
             ),
             Row(
               children: [
@@ -68,76 +86,110 @@ class Welcome_Profile_Setup_Page_1 extends StatelessWidget {
                 print("button clicked.");
               },
               builder: (context, state) {
-                print("value: ${state.value}");
-                print("value: ${state.contColor}");
-                print("value: ${state.txtColor}");
-                print("value: ${state.content}");
+                print("your grade selected value: ${state.value}");
 
-                return Container(
-                  margin: EdgeInsets.only(top: 10),
+                return Center(
+                    child: Container(
+                  margin: EdgeInsets.only(top: 10, left: 15, right: 15),
                   height: 50,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, index) {
-                      return InkWell(
-                        onTap: () {
-                          context.read<WelcomeProfileSetupBloc>().add(
-                              WelcomeProfileSetupButtonClickedEvent(
-                                  value: index,
-                                  contColor: Colors.blue,
-                                  txxtColor: Colors.white,
-                                  content: contentOfButton[index]));
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(right: 4),
-                          height: 40.h,
-                          width: 110.w,
-                          decoration: BoxDecoration(
-                            color: index == state.value
-                                ? state.contColor
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey.shade200),
-                          ),
-                          child: Center(
-                            child: ReusableText(
-                              TextColor: index == state.value
-                                  ? state.txtColor
-                                  : Colors.black,
-                              // FromTop: 50,
-                              TextString: contentOfButton[index],
-                              FontSize: 18,
-                              // TextFontWeight: FontWeight.bold,
-                            ),
-                          ),
+                  child: DropdownMenu(
+                      menuStyle: MenuStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(ColorCollections.SecondaryColor)),
+                      width: double.infinity,
+                      onSelected: (value) {
+                        setState(() {
+                          selectedGrade = value!;
+                        });
+                      },
+                      initialSelection: "None",
+                      inputDecorationTheme: InputDecorationTheme(
+                        fillColor: ColorCollections.SecondaryColor,
+                        border: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white), // Border color
                         ),
-                      );
-                    },
-                  ),
-                );
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.white), // Unfocused border
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white), // Focused border
+                        ),
+                      ),
+                      dropdownMenuEntries: const [
+                        DropdownMenuEntry(
+                          value: "Grade 9",
+                          label: "Grade 9",
+                        ),
+                        DropdownMenuEntry(
+                          value: "Grade 10",
+                          label: "Grade 10",
+                        ),
+                        DropdownMenuEntry(
+                          value: "Grade 11",
+                          label: "Grade 11",
+                        ),
+                        DropdownMenuEntry(
+                          value: "Grade 12",
+                          label: "Grade 12",
+                        ),
+                        DropdownMenuEntry(
+                          value: "None",
+                          label: "None",
+                        ),
+                      ]),
+                ));
               },
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(context,
-                    '/welcome_profile_setup_2_page', (predicate) => true);
-              },
-              child: Container(
-                margin: EdgeInsets.only(top: 40),
-                height: 50,
-                width: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(10),
+            SizedBox(
+              height: 40,
+            ),
+            Center(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(context,
+                      '/welcome_profile_setup_2_page', (predicate) => true);
+                },
+                child: Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: ReusableText(
+                      TextColor: Colors.white,
+                      TextString: "Next",
+                      FontSize: 18,
+                      TextFontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                child: Center(
-                  child: ReusableText(
-                    TextColor: Colors.white,
-                    TextString: "Next",
-                    FontSize: 18,
-                    TextFontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20,),
+            Center(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  decoration: BoxDecoration(
+                    color: ColorCollections.PrimaryColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: ReusableText(
+                      TextColor: ColorCollections.Black54,
+                      TextString: "Back",
+                      FontSize: 18,
+                      TextFontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

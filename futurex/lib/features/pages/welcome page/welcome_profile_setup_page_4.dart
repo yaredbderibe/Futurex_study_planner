@@ -23,7 +23,7 @@ class _Welcome_Page_4State extends State<Welcome_Page_4> {
             Center(
               child: ReusableText(
                 FromTop: 70,
-                TextColor: ColorCollections.Black,
+                TextColor: ColorCollections.TeritiaryColor,
                 TextString: "Course Difficulty Ranking",
                 FontSize: 25,
                 TextFontWeight: FontWeight.w900,
@@ -52,6 +52,7 @@ class _Welcome_Page_4State extends State<Welcome_Page_4> {
               height: 40,
             ),
             ReorderableListView(
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               children: [
                 for (int i = 0; i < courses.length; i++)
@@ -127,8 +128,10 @@ class _Welcome_Page_4State extends State<Welcome_Page_4> {
               onReorder: (oldIndex, newIndex) =>
                   updateMySubjectPosition(oldIndex, newIndex),
             ),
+            SizedBox(height: 20,),
             reusableButtonContainer(
-                context, "Continue", ColorCollections.ThemeColor, Colors.white),
+                context, "Continue", ColorCollections.QuaterneryColor, Colors.white),
+            SizedBox(height: 20,),
             reusableButtonContainer(
                 context, "Back", Colors.white, Colors.black54),
           ],
@@ -152,12 +155,9 @@ class _Welcome_Page_4State extends State<Welcome_Page_4> {
 
   void updateMySubjectPosition(int oldIndex, int newIndex) {
     setState(() {
-      if (oldIndex < newIndex) {
-        newIndex--;
-      }
+      final course = courses.removeAt(oldIndex);
+      courses.insert(newIndex, course);
     });
-    final course = courses.removeAt(oldIndex);
-    courses.insert(newIndex, course);
   }
 
   Widget reusableButtonContainer(
@@ -165,14 +165,14 @@ class _Welcome_Page_4State extends State<Welcome_Page_4> {
     return InkWell(
       onTap: () {
         if (content == "Back") {
-          // Navigator.pop(context);
+          Navigator.pop(context);
         } else {
           Navigator.pushNamedAndRemoveUntil(
               context, '/welcome_profile_setup_5_page', (predicate) => true);
         }
       },
       child: Container(
-        margin: EdgeInsets.only(top: 20, right: 3, left: 3),
+        // margin: EdgeInsets.only(top: 20, right: 3, left: 3),
         height: 55,
         // width: 150,
         decoration: BoxDecoration(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:futurex/common_widget/common_widget.dart';
+import 'package:futurex/features/pages/quiz/quiz_bloc/quiz_bloc.dart';
 import 'package:futurex/features/pages/quiz/quiz_page.dart';
+import 'package:confetti/confetti.dart';
 
 class QuizResult extends StatefulWidget {
   const QuizResult({super.key});
@@ -10,61 +13,91 @@ class QuizResult extends StatefulWidget {
 }
 
 class _QuizResultState extends State<QuizResult> {
+
+  bool isPlaying =true;
+  final controller = ConfettiController();
+  @override
+  void initState() {
+    // TODO: implement initState
+     controller.play();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Container(
-          margin: EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ReusableText(
-                TextColor: Colors.black,
-                TextString: "Quiz Result",
-                FontSize: 25,
-                TextFontWeight: FontWeight.w900,
-                // TextFontWeight: FontWeight.bold,
-              ),
-              Center(
-                child: ReusableText(
-                  FromTop: 70,
-                  TextColor: Colors.black,
-                  TextString: "4/5",
-                  FontSize: 48,
-                  TextFontWeight: FontWeight.w900,
-                  // TextFontWeight: FontWeight.bold,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          Scaffold(
+            body:  Container(
+                margin: EdgeInsets.all(15),
+                child: ConfettiWidget(
+                  emissionFrequency: 0.5,
+                  minBlastForce: 10,
+                  gravity: 1,
+                  maxBlastForce: 100,
+                  numberOfParticles: 20,
+                  blastDirectionality: BlastDirectionality.explosive,
+                  confettiController: controller,
+                  shouldLoop: true,
+                  child: BlocBuilder<QuizBloc, QuizState>(
+                    builder: (context, state) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ReusableText(
+                            TextColor: Colors.black,
+                            TextString: "Quiz Result",
+                            FontSize: 25,
+                            TextFontWeight: FontWeight.w900,
+                            // TextFontWeight: FontWeight.bold,
+                          ),
+                          Center(
+                            child: ReusableText(
+                              FromTop: 70,
+                              TextColor: Colors.black,
+                              TextString: "${state.correctAnswersCount}/ ${state.questions!.quizes.length}",
+                              FontSize: 48,
+                              TextFontWeight: FontWeight.w900,
+                              // TextFontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Center(
+                            child: ReusableText(
+                              FromTop: 10,
+                              TextColor: Colors.grey.shade700,
+                              TextString: "Good job! Keep practicing.",
+                              FontSize: 20,
+                              TextFontWeight: FontWeight.w700,
+                              // TextFontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          reusableButtonContainer(
+                              context, "Try Again", Colors.blue, Colors.white),
+                          reusableButtonContainer(
+                              context, "Back To Dashboard", Colors.white, Colors.black)
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
-              Center(
-                child: ReusableText(
-                  FromTop: 10,
-                  TextColor: Colors.grey.shade700,
-                  TextString: "Good job! Keep practicing.",
-                  FontSize: 20,
-                  TextFontWeight: FontWeight.w700,
-                  // TextFontWeight: FontWeight.bold,
-                ),
-              ),
-              reusableButtonContainer(
-                  context, "Try Again", Colors.blue, Colors.white),
-              reusableButtonContainer(
-                  context, "Back To Dashboard", Colors.white, Colors.black)
-            ],
-          ),
-        ),
+            ),
+        ],
       ),
     );
   }
 
-  Widget reusableButtonContainer(
-      BuildContext context, String content, Color contColor, Color txtColor) {
+  Widget reusableButtonContainer(BuildContext context, String content,
+      Color contColor, Color txtColor) {
     return InkWell(
       onTap: () {
         if (content == "Try Again") {
+          context.read<QuizBloc>().add(TryAgainQuizQuestion());
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => Quiz_Page()));
         } else {
+          context.read<QuizBloc>().add(TryAgainQuizQuestion());
           Navigator.pushNamedAndRemoveUntil(
               context, '/index_page', (predicate) => true);
         }

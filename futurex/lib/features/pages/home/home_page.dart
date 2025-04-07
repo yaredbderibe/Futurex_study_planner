@@ -4,6 +4,7 @@ import 'package:futurex/common_widget/common_widget.dart';
 import 'package:futurex/features/pages/home/bloc/home_bloc.dart';
 import 'package:futurex/models/notificationModel.dart';
 import 'package:futurex/services/notification_services.dart';
+import 'package:futurex/services/theme_mode_provider.dart';
 import 'package:futurex/utils/color_collections.dart';
 
 class Home_Page extends StatefulWidget {
@@ -23,16 +24,28 @@ class _Home_PageState extends State<Home_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.grey.shade50,
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: ListView(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: () {
+
+                  context.read<ThemeManager>().toggleTheme();
+                  },
+                  icon: Icon(Icons.light_mode),
+                ),
+              ],
+            ),
             ReusableText(
               TextColor: Colors.black,
               FromLeft: 15,
               FromRight: 10,
-              FromTop: 50,
+              FromTop: 0,
               TextString: "Hi,Yared!",
               FontSize: 35,
               TextFontWeight: FontWeight.w900,
@@ -58,7 +71,16 @@ class _Home_PageState extends State<Home_Page> {
                   // width: 100,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
+                      color: Colors.white,
+                      // border: Border.all(color: Colors.grey.shade100),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue.shade200.withOpacity(0.2),
+                          blurRadius: 10.0,
+                          spreadRadius: 2.0,
+                          offset: Offset(0, 0),
+                        ),
+                      ]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -93,7 +115,16 @@ class _Home_PageState extends State<Home_Page> {
               // height: 250,
               // width: 100,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.white),
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blue.shade200.withOpacity(0.2),
+                      blurRadius: 10.0,
+                      spreadRadius: 2.0,
+                      offset: Offset(0, 0),
+                    ),
+                  ]),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -116,7 +147,7 @@ class _Home_PageState extends State<Home_Page> {
                 ],
               ),
             ),
-            MotivationalReusableContainer(context, Icons.bar_chart,
+            MotivationalReusableContainer(context, Icons.trending_up,
                 "Stay Consistent", "You got this!", 10)
           ],
         ),
@@ -133,8 +164,8 @@ class _Home_PageState extends State<Home_Page> {
   Widget MotivationalReusableContainer(BuildContext context, IconData icon,
       String title, String subtitle, double marginTop) {
     return Container(
-      margin: EdgeInsets.only(top: marginTop, left: 10, right: 10),
-      height: 85,
+      margin: EdgeInsets.only(top: marginTop, left: 10, right: 10, bottom: 30),
+      height: 90,
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         gradient: LinearGradient(colors: [Colors.blue, Colors.grey.shade50]),
@@ -147,7 +178,7 @@ class _Home_PageState extends State<Home_Page> {
             margin: EdgeInsets.only(left: 15),
             child: Icon(
               icon,
-              size: 45,
+              size: 40,
               color: ColorCollections.PrimaryColor,
             ),
           ),
@@ -160,12 +191,12 @@ class _Home_PageState extends State<Home_Page> {
                   FromTop: 15,
                   FromBottom: 0,
                   TextString: title,
-                  FontSize: 16,
+                  FontSize: 18,
                   TextFontWeight: FontWeight.bold,
                 ),
                 ReusableText(
                   TextString: subtitle,
-                  FontSize: 14,
+                  FontSize: 16,
                 ),
               ],
             ),

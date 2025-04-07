@@ -2,20 +2,58 @@ import 'package:flutter/material.dart';
 import 'package:futurex/common_widget/common_widget.dart';
 import 'package:futurex/utils/color_collections.dart';
 
-class Welcome_Page extends StatelessWidget {
+class Welcome_Page extends StatefulWidget {
   const Welcome_Page({super.key});
 
+  @override
+  State<Welcome_Page> createState() => _Welcome_PageState();
+}
+
+class _Welcome_PageState extends State<Welcome_Page> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorCollections.ThemeColor,
+        backgroundColor: ColorCollections.QuaterneryColor,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                DropdownMenu(
+                     textStyle:const TextStyle(color: ColorCollections.PrimaryColor),
+                    onSelected: (value) {
+                      setState(() {});
+                    },
+                    initialSelection: "English",
+                    inputDecorationTheme: const InputDecorationTheme(
+                      labelStyle:TextStyle(color: ColorCollections.PrimaryColor),
+                      suffixIconColor:ColorCollections.PrimaryColor,
+                      fillColor: Colors.transparent,
+                      enabledBorder: OutlineInputBorder(
+                         borderSide: BorderSide.none// Unfocused border
+                      ),
+                      focusedBorder: OutlineInputBorder(
+
+                      ),
+                    ),
+                    dropdownMenuEntries: const [
+                      DropdownMenuEntry(
+                        value: "English",
+                        label: "English",
+                      ),
+                      DropdownMenuEntry(
+                        value: "Amharic",
+                        label: "Amharic",
+                      ),
+                    ],
+                ),
+              ],
+            ),
             Center(
               child: Container(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 20),
                 child: Image.asset(
                   "assets/logo/futurex_logo.png",
                   height: 70,
@@ -48,13 +86,15 @@ class Welcome_Page extends StatelessWidget {
                 "Test your knowledge regularly", 15),
             ReusableContainer(context, Icons.analytics, "Track Progress",
                 "Monitor your improvement over time", 15),
+            SizedBox(
+              height: 40,
+            ),
             InkWell(
               onTap: () {
                 Navigator.pushNamedAndRemoveUntil(context,
                     '/welcome_profile_setup_1_page', (predicate) => true);
               },
               child: Container(
-                margin: EdgeInsets.only(top: 40),
                 height: 50,
                 width: MediaQuery.of(context).size.width * 0.9,
                 decoration: BoxDecoration(
@@ -63,7 +103,7 @@ class Welcome_Page extends StatelessWidget {
                 ),
                 child: Center(
                   child: ReusableText(
-                    TextColor: ColorCollections.ThemeColor,
+                    TextColor: ColorCollections.QuaterneryColor,
                     TextString: "Get Started",
                     FontSize: 18,
                     TextFontWeight: FontWeight.bold,

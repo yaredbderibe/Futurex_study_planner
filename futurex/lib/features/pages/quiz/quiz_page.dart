@@ -12,6 +12,7 @@ class Quiz_Page extends StatefulWidget {
 }
 
 class _Quiz_PageState extends State<Quiz_Page> {
+  // int questionIndex = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,14 +20,15 @@ class _Quiz_PageState extends State<Quiz_Page> {
         backgroundColor: Colors.grey.shade50,
         body: Container(
           margin: EdgeInsets.all(15),
-          child: BlocConsumer<QuizBloc, QuizState>(
-            listener: (context, state) {
-              // TODO: implement listener
-            },
+          child: BlocBuilder<QuizBloc, QuizState>(
             builder: (context, state) {
-              print("state is : ${state}");
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              if (state.questions == null) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              final question = state.questions!.quizes[state.currentIndex];
+              final totalQuestions = state.questions!.quizes.length;
+
+              return ListView(
                 children: [
                   ReusableText(
                     TextColor: Colors.black,
@@ -37,44 +39,98 @@ class _Quiz_PageState extends State<Quiz_Page> {
                   ),
                   ReusableText(
                     TextColor: Colors.grey.shade700,
-                    TextString: "Question 1 of 5",
+                    TextString: 'Question ${state.currentIndex + 1} of $totalQuestions',
                     FontSize: 20,
                     // TextFontWeight: FontWeight.w900,
                     // TextFontWeight: FontWeight.bold,
                   ),
-                  ListView.builder(
-                    itemCount: 4,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, index) {
-                      return Container(
-                        margin: EdgeInsets.only(top: 30),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          // border: Border.all(color: Colors.grey.shade200),
+                  Container(
+                    margin: EdgeInsets.only(top: 30),
+                    padding: EdgeInsets.only(top: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ReusableText(
+                          FromLeft: 30,
+                          TextColor: Colors.grey.shade900,
+                          TextString:
+                              "${question.text}",
+                          FontSize: 18,
+                          TextFontWeight: FontWeight.w500,
+                          // TextFontWeight: FontWeight.bold,
                         ),
-                        child: Column(
+                        ...question.options.asMap().entries.map((entry) {
+                          final index = entry.key;
+                          final option = entry.value;
+                          final isSelected = state.selectedAnswerIndex == index;
+                          final isCorrectAnswer = option.correct;
+                          final showAnswer = state.isAnswered;
+
+                          Color? bgColor;
+                          if (showAnswer) {
+                            bgColor = isCorrectAnswer
+                                ? Colors.green
+                                : isSelected
+                                ? Colors.red
+                                : null;
+                          } else if (isSelected) {
+                            bgColor = Colors.blue;
+                          }
+
+                          return Container(
+                            margin: EdgeInsets.only(top: 30),
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              // border: Border.all(color: Colors.grey.shade200),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                QuizReusableChoiceContainer(
+                                    context,
+                                    "${option.text}",
+                                    index,
+                                    state,
+                                    bgColor
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                        state.selectedAnswerIndex!=null ?  ExpansionTile(
+                          title: ReusableText(
+                            TextColor: Colors.black,
+                            TextString: "Explanation",
+                            FontSize: 18,
+                          ),
                           children: [
-                            QuizReusableChoiceContainer(
-                                context,
-                                questionChooseContent[index],
-                                index,
-                                state
+                            ReusableText(
+                              FromLeft: 10,
+                              FromRight: 10,
+                              TextColor: Colors.grey.shade700,
+                              TextString: question.explanation,
+                              FontSize: 16,
                             ),
                           ],
-                        ),
-                      );
-                    },
+                        ):SizedBox(),
+                      ],
+                    ),
                   ),
+                  SizedBox(height: 30,),
                   Row(
                     children: [
                       Expanded(
                           child: reusableButtonContainer(
-                              context, "Previous", Colors.white, Colors.black)),
+                              context, "Previous", Colors.white, Colors.black,state)),
+                      SizedBox(width: 10,),
                       Expanded(
                           child: reusableButtonContainer(
-                              context, "Next", Colors.blue, Colors.white)),
+                              context, "Next", Colors.blue, Colors.white,state)),
                     ],
                   ),
                 ],
@@ -86,25 +142,24 @@ class _Quiz_PageState extends State<Quiz_Page> {
     );
   }
 
-  List<String> questionChooseContent = [
-    "London",
-    "France",
-    "Berlin",
-    "Paris",
-  ];
   Widget reusableButtonContainer(
-      BuildContext context, String content, Color contColor, Color txtColor) {
+      BuildContext context, String content, Color contColor, Color txtColor,dynamic state) {
     return InkWell(
       onTap: () {
         if (content == "Next") {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>QuizResult()));
+          if (state.isAnswered && !state.isLastQuestion) {
+            context.read<QuizBloc>().add(NextQuestion());
+          }else if(state.isLastQuestion){
+             Navigator.push(context, MaterialPageRoute(builder: (context)=>QuizResult()));
+          }
         } else {
-          // Navigator.pushNamedAndRemoveUntil(
-          //     context, '/index_page', (predicate) => true);
+          if (state.currentIndex > 0) {
+            context.read<QuizBloc>().add(PreviousQuestion());
+          }
         }
       },
       child: Container(
-        margin: EdgeInsets.only(top: 30, right: 3, left: 3),
+        // margin: EdgeInsets.only(top: 30, right: 3, left: 3),
         height: 55,
         // width: 150,
         decoration: BoxDecoration(
@@ -126,42 +181,34 @@ class _Quiz_PageState extends State<Quiz_Page> {
     );
   }
 
-  Widget QuizReusableChoiceContainer(BuildContext context,String choiceContent,int index,dynamic state) {
+  Widget QuizReusableChoiceContainer(
+      BuildContext context, String choiceContent, int index, dynamic state,Color? bgColor) {
     return InkWell(
       onTap: () {
-        if(state.content==null){
-          print("state is null");
-          context.read<QuizBloc>().add(
-              QuizAnswerClickedEvent(
-                  value: index,
-                  contColor: Colors.blue,
-                  txtColor: Colors.white,
-                  content: choiceContent ));
+        if (!state.isAnswered) {
+          print("before bloc answer selected event");
+          context.read<QuizBloc>().add(AnswerSelected(index));
+          print("after bloc answer selected event");
         }
-        print("state is not null");
-        print(state);
-
+        print("answered");
       },
       child: Container(
         margin: EdgeInsets.only(top: 0),
-        padding: EdgeInsets.only(left: 15),
+        padding: EdgeInsets.only(left: 15,bottom: 10),
         decoration: BoxDecoration(
-          color: state.value==index? state.contColor: Colors.white,
+          color: bgColor,
           borderRadius: BorderRadius.circular(10),
           // border: Border.all(color: Colors.grey.shade200),
         ),
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ReusableText(
-              TextColor: state.value==index? state.txtColor:Colors.grey.shade900,
-              TextString: choiceContent,
-              FontSize: 20,
-              // TextFontWeight: FontWeight.w900,
-              TextFontWeight: FontWeight.w400,
-            ),
-          ],
+        // height: 60,
+        width: double.infinity,
+        child: ReusableText(
+          FromTop: 15,
+          TextColor: bgColor != null ? Colors.white : Colors.grey.shade900,
+          TextString: choiceContent,
+          FontSize: 18,
+          // TextFontWeight: FontWeight.w900,
+          TextFontWeight: FontWeight.w400,
         ),
       ),
     );

@@ -5,7 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:futurex/features/pages/home/home_page.dart';
 import 'package:futurex/route_handler/pages.dart';
 import 'package:futurex/services/global.dart';
+import 'package:futurex/services/theme_mode_provider.dart';
 import 'package:futurex/utils/color_collections.dart';
+import 'package:futurex/utils/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   AwesomeNotifications().initialize(
@@ -46,14 +49,47 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  ThemeManager themeManager = ThemeManager();
+
+  @override
+  void initState() {
+    themeManager.addListener(themeListener);
+    // TODO: implement initState
+    super.initState();
+  }
+
+  themeListener(){
+    if(mounted){
+      setState(() {
+
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    themeManager.removeListener(themeListener);
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      child: MultiBlocProvider(
-        providers: [...NamedRouteSettings.allBlocProviders(context)],
-        child: const MaterialApp(
-          onGenerateRoute: NamedRouteSettings.GenerateRouteSettings,
-          debugShowCheckedModeBanner: false,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_)=>ThemeManager()),
+        ],
+        builder:(BuildContext context,child)=> MultiBlocProvider(
+          providers: [...NamedRouteSettings.allBlocProviders(context)],
+          child: MaterialApp(
+            theme: lightMode,
+            darkTheme: darkMode,
+            themeMode: context.watch<ThemeManager>().themeMode,
+            onGenerateRoute: NamedRouteSettings.GenerateRouteSettings,
+            debugShowCheckedModeBanner: false,
+          ),
         ),
       ),
     );

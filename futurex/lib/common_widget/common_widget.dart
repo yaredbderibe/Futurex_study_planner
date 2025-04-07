@@ -104,9 +104,9 @@ class AppButton extends StatelessWidget {
       height: ButtonHeight,
       width: ButtonWidth,
       decoration: BoxDecoration(
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: ColorCollections.TeritiaryColor,
+            color: ColorCollections.SecondaryColor,
             spreadRadius: 2,
             blurRadius: 5,
             offset: Offset(5, 5),
@@ -145,7 +145,7 @@ Widget reusableTextField({
   double FromLeft = 0, 
 }) {
   return Container(
-    height: 38.h,
+    height: 45.h,
     // width: WidthOfContainer.w,
     margin: EdgeInsets.only(
       top: FromTop.w,
@@ -156,7 +156,7 @@ Widget reusableTextField({
     decoration: BoxDecoration(
       color: ColorCollections.PrimaryColor,
       borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: const Color.fromARGB(255, 192, 190, 190)),
+      border: Border.all(color:  Colors.grey.shade100),
     ),
     child: Row(
       // mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -181,7 +181,7 @@ Widget reusableTextField({
               isDense: true,
               // suffixIcon: suffixIcon,
               hintText: hintText,
-              hintStyle: TextStyle(color: Colors.grey.withOpacity(0.5)),
+              hintStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
               border: const OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.transparent,
@@ -561,7 +561,7 @@ CustomShowDialoge(BuildContext context) {
                       FromLeft: 15,
                       TextString: " AppLocalizations.of(context)!.category",
                       FontSize: 15,
-                      TextColor: ColorCollections.Black,
+                      TextColor: ColorCollections.TeritiaryColor,
                     ),
                     Container(
                       margin: EdgeInsets.only(left: 25),
@@ -583,7 +583,7 @@ CustomShowDialoge(BuildContext context) {
                       FromLeft: 15,
                       TextString: "AppLocalizations.of(context)!.itemName",
                       FontSize: 15,
-                      TextColor: ColorCollections.Black,
+                      TextColor: ColorCollections.TeritiaryColor,
                     ),
                     Container(
                       margin: EdgeInsets.only(left: 15),
@@ -607,7 +607,7 @@ CustomShowDialoge(BuildContext context) {
                       FromLeft: 15,
                       TextString: "AppLocalizations.of(context)!.description",
                       FontSize: 15,
-                      TextColor: ColorCollections.Black,
+                      TextColor: ColorCollections.TeritiaryColor,
                     ),
                     ConstrainedBox(
                       constraints: BoxConstraints.fromViewConstraints(
@@ -635,7 +635,7 @@ CustomShowDialoge(BuildContext context) {
                             FromLeft: 15,
                             TextString: "AppLocalizations.of(context)!.photo",
                             FontSize: 15,
-                            TextColor: ColorCollections.Black,
+                            TextColor: ColorCollections.TeritiaryColor,
                           ),
                           Container(
                             margin: EdgeInsets.only(left: 57),
@@ -738,7 +738,7 @@ Drawer CustomDrowerElement(
                   margin: EdgeInsets.only(top: 180),
                   height: 1,
                   width: 230,
-                  color: ColorCollections.Black,
+                  color: ColorCollections.TeritiaryColor,
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -748,7 +748,7 @@ Drawer CustomDrowerElement(
                       FromBottom: 0,
                       TextString: 'TEFLI company',
                       FontSize: 14,
-                      TextColor: ColorCollections.Black,
+                      TextColor: ColorCollections.TeritiaryColor,
                     ),
                     InkWell(
                       onTap: () {},
@@ -789,7 +789,7 @@ Widget DrowerWidget(IconData icons, String text, VoidCallback ontap) {
             FromLeft: 15,
             TextString: text,
             FontSize: 20,
-            TextColor: ColorCollections.Black,
+            TextColor: ColorCollections.TeritiaryColor,
           ),
         ],
       ),
@@ -816,7 +816,7 @@ LogoutShowDialogue(BuildContext context) {
                           TextFontWeight: FontWeight.w700,
                         ),
                         ReusableText(
-                          TextColor: ColorCollections.Black,
+                          TextColor: ColorCollections.TeritiaryColor,
                           TextString:
                               " AppLocalizations.of(context)!.areYouSureLogout",
                           FontSize: 19,
@@ -891,7 +891,7 @@ Widget buildStepProgressBar(int currentStep, int totalSteps) {
           margin: EdgeInsets.only(top: 20, left: 5, right: 5),
           height: 6,
           decoration: BoxDecoration(
-            color: index < currentStep ? Colors.blue : Colors.grey[300],
+            color: index < currentStep ? Colors.blue : Colors.blue[100],
             borderRadius: BorderRadius.circular(5),
           ),
         ),

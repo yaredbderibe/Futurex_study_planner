@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:futurex/common_widget/common_widget.dart';
 import 'package:futurex/utils/color_collections.dart';
+import 'package:intl/intl.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 
 class Welcome_Page_5 extends StatefulWidget {
@@ -11,6 +12,7 @@ class Welcome_Page_5 extends StatefulWidget {
 }
 
 class _Welcome_Page_5State extends State<Welcome_Page_5> {
+  DateTime? finalDate;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +25,7 @@ class _Welcome_Page_5State extends State<Welcome_Page_5> {
             Center(
               child: ReusableText(
                 FromTop: 70,
-                TextColor: ColorCollections.Black,
+                TextColor: ColorCollections.TeritiaryColor,
                 TextString: "Upcoming Final Exam",
                 FontSize: 25,
                 TextFontWeight: FontWeight.w900,
@@ -62,8 +64,10 @@ class _Welcome_Page_5State extends State<Welcome_Page_5> {
                   children: [
                     ReusableText(
                       // FromTop: 50,
-                      TextColor: ColorCollections.Black,
-                      TextString: "Select the final date",
+                      TextColor: ColorCollections.TeritiaryColor,
+                      TextString: finalDate == null
+                          ? "Select the final date"
+                          : DateFormat.yMMMd().add_jm().format(finalDate!),
                       FontSize: 17,
                       TextFontWeight: FontWeight.w400,
                     ),
@@ -75,8 +79,10 @@ class _Welcome_Page_5State extends State<Welcome_Page_5> {
             SizedBox(
               height: 40,
             ),
+            SizedBox(height: 20,),
             reusableButtonContainer(
                 context, "Continue", Colors.blue, Colors.white),
+            SizedBox(height: 20,),
             reusableButtonContainer(
                 context, "Back", Colors.white, Colors.black54),
           ],
@@ -84,6 +90,10 @@ class _Welcome_Page_5State extends State<Welcome_Page_5> {
       ),
     );
   }
+
+  // String formatTime(DateTime finalDate){
+  //     return ;
+  // }
 
   Future<void> _selectDate() async {
     DateTime? _picked = await showDatePicker(
@@ -93,9 +103,9 @@ class _Welcome_Page_5State extends State<Welcome_Page_5> {
       lastDate: DateTime(2100),
     );
     if (_picked != null) {
-      // setState(() {
-      //   widget.item_model.date_picked = _picked.toString().split(" ")[0];
-      // });
+      setState(() {
+        finalDate = _picked;
+      });
     }
   }
 
@@ -104,14 +114,14 @@ class _Welcome_Page_5State extends State<Welcome_Page_5> {
     return InkWell(
       onTap: () {
         if (content == "Back") {
-          // Navigator.pop(context);
+          Navigator.pop(context);
         } else {
           Navigator.pushNamedAndRemoveUntil(
               context, '/index_page', (predicate) => true);
         }
       },
       child: Container(
-        margin: EdgeInsets.only(top: 20, right: 3, left: 3),
+        // margin: EdgeInsets.only(top: 20, right: 3, left: 3),
         height: 55,
         // width: 150,
         decoration: BoxDecoration(

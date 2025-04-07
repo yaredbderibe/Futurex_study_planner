@@ -39,7 +39,7 @@ class _Welcome_Profile_Setup_Page_2State
               Center(
                 child: ReusableText(
                   FromTop: 70,
-                  TextColor: ColorCollections.Black,
+                  TextColor: ColorCollections.TeritiaryColor,
                   TextString: "Study Schedule",
                   FontSize: 25,
                   TextFontWeight: FontWeight.w900,
@@ -82,7 +82,7 @@ class _Welcome_Profile_Setup_Page_2State
                       TextString:
                           "On what time of the day do you usually study?",
                       FontSize: 20,
-                      TextFontWeight: FontWeight.w900,
+                      TextFontWeight: FontWeight.w500,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +99,7 @@ class _Welcome_Profile_Setup_Page_2State
                           textStyle: TextStyle(
                               color: Colors.grey.shade500, fontSize: 18),
                           selectedTextStyle: TextStyle(
-                              color: ColorCollections.ThemeColor, fontSize: 20),
+                              color: ColorCollections.QuaterneryColor, fontSize: 20),
                           decoration: BoxDecoration(
                               // border: Border(
                               //   top: BorderSide(color: ColorCollections.ThemeColor),
@@ -122,7 +122,7 @@ class _Welcome_Profile_Setup_Page_2State
                           textStyle: TextStyle(
                               color: Colors.grey.shade500, fontSize: 18),
                           selectedTextStyle: TextStyle(
-                              color: ColorCollections.ThemeColor, fontSize: 20),
+                              color: ColorCollections.QuaterneryColor, fontSize: 20),
                           decoration: BoxDecoration(
                               // border: Border(
                               //     top: BorderSide(color: ColorCollections.ThemeColor),
@@ -146,7 +146,7 @@ class _Welcome_Profile_Setup_Page_2State
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: timeFormat == "AM"
-                                          ? ColorCollections.ThemeColor
+                                          ? ColorCollections.QuaterneryColor
                                           : Colors.blue.shade100,
                                     ),
                                     child: Center(
@@ -170,7 +170,7 @@ class _Welcome_Profile_Setup_Page_2State
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: timeFormat == "PM"
-                                          ? ColorCollections.ThemeColor
+                                          ? ColorCollections.QuaterneryColor
                                           : Colors.blue.shade100,
                                     ),
                                     child: Center(
@@ -203,17 +203,17 @@ class _Welcome_Profile_Setup_Page_2State
                     ReusableText(
                       FromTop: 10,
                       FromBottom: 10,
-                      TextColor: ColorCollections.Black,
+                      TextColor: ColorCollections.TeritiaryColor,
                       TextString:
-                          "For how long do you usually study in weekdays?",
+                          "Study Duration(Weekday)",
                       FontSize: 20,
-                      TextFontWeight: FontWeight.w600,
+                      TextFontWeight: FontWeight.w500,
                     ),
                     Column(
                       // mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(2),
+                          padding: const EdgeInsets.all(0),
                           child: SliderTheme(
                             data: SliderTheme.of(context).copyWith(
                               trackHeight: 5,
@@ -224,12 +224,12 @@ class _Welcome_Profile_Setup_Page_2State
                               ),
                               activeTrackColor: Colors.grey.shade200,
                               inactiveTrackColor: Colors.grey.shade200,
-                              thumbColor: ColorCollections.ThemeColor,
+                              thumbColor: ColorCollections.QuaterneryColor,
                               overlayColor:
-                                  ColorCollections.ThemeColor.withOpacity(0.2),
+                                  ColorCollections.QuaterneryColor.withOpacity(0.2),
                               valueIndicatorShape:
                                   PaddleSliderValueIndicatorShape(),
-                              valueIndicatorColor: ColorCollections.ThemeColor,
+                              valueIndicatorColor: ColorCollections.QuaterneryColor,
                               valueIndicatorTextStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -237,14 +237,14 @@ class _Welcome_Profile_Setup_Page_2State
                               ),
                             ),
                             child: Slider(
-                              value: StudyDurationHour,
+                              value: weekendStudyHour,
                               min: 0,
                               max: 6,
                               divisions: 7,
-                              label: '${StudyDurationHour.round()} Hour',
+                              label: '${weekendStudyHour.round()} Hour',
                               onChanged: (double value) {
                                 setState(() {
-                                  StudyDurationHour = value;
+                                  weekendStudyHour = value;
                                 });
                               },
                             ),
@@ -256,19 +256,17 @@ class _Welcome_Profile_Setup_Page_2State
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: List.generate(
                                 7,
-                                (index) => Text(
-                                      '$index',
-                                      style: TextStyle(
-                                        color:
-                                            StudyDurationHour.round() == index
-                                                ? ColorCollections.ThemeColor
-                                                : Colors.grey,
-                                        fontWeight:
-                                            StudyDurationHour.round() == index
-                                                ? FontWeight.bold
-                                                : FontWeight.normal,
-                                      ),
-                                    )),
+                                (index) =>  ReusableText(
+                                  TextString: '$index',
+                                  FontSize: 14,
+                                  TextColor:weekendStudyHour.round() == index
+                                      ? ColorCollections.QuaterneryColor
+                                      : Colors.grey,
+                                  TextFontWeight:  weekendStudyHour.round() == index
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                ),
+                            ),
                           ),
                         ),
                       ],
@@ -289,11 +287,11 @@ class _Welcome_Profile_Setup_Page_2State
                     ReusableText(
                       FromTop: 10,
                       FromBottom: 10,
-                      TextColor: ColorCollections.Black,
+                      TextColor: ColorCollections.QuaterneryColor,
                       TextString:
-                          "For how long do you usually study in weekdays?",
+                          "Weekend study hour(hours)",
                       FontSize: 20,
-                      TextFontWeight: FontWeight.w600,
+                      TextFontWeight: FontWeight.w500,
                     ),
                     Column(
                       // mainAxisSize: MainAxisSize.min,
@@ -310,12 +308,12 @@ class _Welcome_Profile_Setup_Page_2State
                               ),
                               activeTrackColor: Colors.grey.shade200,
                               inactiveTrackColor: Colors.grey.shade200,
-                              thumbColor: ColorCollections.ThemeColor,
+                              thumbColor: ColorCollections.QuaterneryColor,
                               overlayColor:
-                                  ColorCollections.ThemeColor.withOpacity(0.2),
+                                  ColorCollections.QuaterneryColor.withOpacity(0.2),
                               valueIndicatorShape:
                                   PaddleSliderValueIndicatorShape(),
-                              valueIndicatorColor: ColorCollections.ThemeColor,
+                              valueIndicatorColor: ColorCollections.QuaterneryColor,
                               valueIndicatorTextStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -342,19 +340,19 @@ class _Welcome_Profile_Setup_Page_2State
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: List.generate(
                                 7,
-                                (index) => Text(
-                                      '$index',
-                                      style: TextStyle(
-                                        color:
-                                            StudyDurationHour.round() == index
-                                                ? ColorCollections.ThemeColor
-                                                : Colors.grey,
-                                        fontWeight:
-                                            StudyDurationHour.round() == index
-                                                ? FontWeight.bold
-                                                : FontWeight.normal,
-                                      ),
-                                    )),
+                                (index) =>
+                                    ReusableText(
+                                        TextString: '$index',
+                                        FontSize: 14,
+                                        TextColor:StudyDurationHour.round() == index
+                                            ? ColorCollections.QuaterneryColor
+                                            : Colors.grey,
+                                         TextFontWeight:  StudyDurationHour.round() == index
+                                             ? FontWeight.bold
+                                             : FontWeight.normal,
+                                    )
+
+                            ),
                           ),
                         ),
                       ],
@@ -376,10 +374,10 @@ class _Welcome_Profile_Setup_Page_2State
                     ReusableText(
                       FromTop: 20,
                       FromBottom: 30,
-                      TextColor: ColorCollections.Black,
+                      TextColor: ColorCollections.TeritiaryColor,
                       TextString: "Rest Day",
                       FontSize: 18,
-                      TextFontWeight: FontWeight.w700,
+                      TextFontWeight: FontWeight.w500,
                     ),
                     DropdownMenu(
                         width: double.infinity,
@@ -438,72 +436,10 @@ class _Welcome_Profile_Setup_Page_2State
                   ],
                 ),
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     SizedBox(
-              //       width: 5,
-              //     ),
-              //     NumberPicker(
-              //       value: StudyDurationHour,
-              //       minValue: 0,
-              //       maxValue: 100,
-              //       onChanged: (value) {
-              //         setState(() {
-              //           StudyDurationHour = value;
-              //         });
-              //       },
-              //       textStyle:
-              //           TextStyle(color: Colors.grey.shade500, fontSize: 18),
-              //       selectedTextStyle:
-              //           TextStyle(color: ColorCollections.ThemeColor.shade500, fontSize: 20),
-              //       decoration: BoxDecoration(
-              //           border: Border(
-              //               top: BorderSide(color: ColorCollections.ThemeColor),
-              //               bottom: BorderSide(color: ColorCollections.ThemeColor))),
-              //     ),
-
-              // Row(
-              //   children: [
-              //     ReusableText(
-              //       FromTop: 20,
-              //       FromBottom: 0,
-              //       TextColor: ColorCollections.Black,
-              //       TextString: "Weekend Study hour",
-              //       FontSize: 18,
-              //       TextFontWeight: FontWeight.w500,
-              //     ),
-              //   ],
-              // ),
-              // Row(
-              //   children: [
-              //     SizedBox(
-              //       width: 30,
-              //     ),
-              //     NumberPicker(
-              //       value: weekendStudyHour,
-              //       minValue: 0,
-              //       maxValue: 100,
-              //       onChanged: (value) {
-              //         setState(() {
-              //           weekendStudyHour = value;
-              //         });
-              //       },
-              //       textStyle:
-              //           TextStyle(color: Colors.grey.shade500, fontSize: 18),
-              //       selectedTextStyle:
-              //           TextStyle(color: ColorCollections.ThemeColor.shade500, fontSize: 20),
-              //       decoration: BoxDecoration(
-              //         // border: Border(
-              //         //   top: BorderSide(color: ColorCollections.ThemeColor),
-              //         //   bottom: BorderSide(color: ColorCollections.ThemeColor),
-              //         // ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              SizedBox(height: 20,),
               reusableButtonContainer(context, "Continue",
-                  ColorCollections.ThemeColor, Colors.white),
+                  ColorCollections.QuaterneryColor, Colors.white),
+              SizedBox(height: 20,),
               reusableButtonContainer(
                   context, "Back", Colors.white, Colors.black),
             ],
@@ -534,7 +470,7 @@ class _Welcome_Profile_Setup_Page_2State
         }
       },
       child: Container(
-        margin: EdgeInsets.only(right: 10, top: 20),
+        // margin: EdgeInsets.only(right: 10),
         height: 55,
         // width: 150,
         decoration: BoxDecoration(

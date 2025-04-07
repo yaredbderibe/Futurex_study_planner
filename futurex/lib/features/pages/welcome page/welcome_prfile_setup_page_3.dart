@@ -24,7 +24,7 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
             Center(
               child: ReusableText(
                 FromTop: 70,
-                TextColor: ColorCollections.Black,
+                TextColor: ColorCollections.TeritiaryColor,
                 TextString: "Learning Style",
                 FontSize: 25,
                 TextFontWeight: FontWeight.w900,
@@ -80,7 +80,7 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
                                     const EdgeInsets.only(right: 15, left: 10),
                                 child: Icon(
                                   icons[i],
-                                  color: ColorCollections.ThemeColor,
+                                  color: ColorCollections.QuaterneryColor,
                                   size: 30,
                                 ),
                               ),
@@ -116,6 +116,7 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
                               IconButton(
                                 onPressed: () {
                                   if (i < preferredWay.length - 1) {
+                                    print("inside arrow down");
                                     updateMySubjectPosition(i, i + 1);
                                   }
                                 },
@@ -134,8 +135,10 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
               onReorder: (oldIndex, newIndex) =>
                   updateMySubjectPosition(oldIndex, newIndex),
             ),
+            SizedBox(height: 20,),
             reusableButtonContainer(
-                context, "Continue", ColorCollections.ThemeColor, Colors.white),
+                context, "Continue", ColorCollections.QuaterneryColor, Colors.white),
+            SizedBox(height: 20,),
             reusableButtonContainer(
                 context, "Back", Colors.white, Colors.black54),
           ],
@@ -158,12 +161,12 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
 
   void updateMySubjectPosition(int oldIndex, int newIndex) {
     setState(() {
-      if (oldIndex < newIndex) {
-        newIndex--;
-      }
+      final course = preferredWay.removeAt(oldIndex);
+      final icon = icons.removeAt(oldIndex);
+
+      icons.insert(newIndex, icon);
+      preferredWay.insert(newIndex, course);
     });
-    final course = preferredWay.removeAt(oldIndex);
-    preferredWay.insert(newIndex, course);
   }
 
   Widget reusableButtonContainer(
@@ -171,14 +174,14 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
     return InkWell(
       onTap: () {
         if (content == "Back") {
-          // Navigator.pop(context);
+          Navigator.pop(context);
         } else {
           Navigator.pushNamedAndRemoveUntil(
               context, '/welcome_profile_setup_4_page', (predicate) => true);
         }
       },
       child: Container(
-        margin: EdgeInsets.only(top: 20, right: 3, left: 3),
+        // margin: EdgeInsets.only(top: 20, right: 3, left: 3),
         height: 55,
         // width: 150,
         decoration: BoxDecoration(

@@ -17,7 +17,7 @@ class _Settings_PageState extends State<Settings_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: ColorCollections.SecondaryColor,
          body: Container(
            margin: EdgeInsets.all(10),
            child: ListView(
@@ -110,15 +110,13 @@ class _Settings_PageState extends State<Settings_Page> {
                          print("button clicked.");
                        },
                        builder: (context, state) {
-                         print("value: ${state.value}");
-                         print("value: ${state.contColor}");
-                         print("value: ${state.txtColor}");
-                         print("value: ${state.content}");
+                         print("Your grade selected value index: ${state.value}");
 
                          return Container(
                            margin: EdgeInsets.only(top: 10),
                            height: 50,
                            child: ListView.builder(
+                             physics: NeverScrollableScrollPhysics(),
                              scrollDirection: Axis.horizontal,
                              shrinkWrap: true,
                              itemCount: 3,
@@ -143,7 +141,7 @@ class _Settings_PageState extends State<Settings_Page> {
                                    ),
                                    child: Center(
                                      child: ReusableText(
-                                       TextColor: index==state.value ? state.txtColor : Colors.black,
+                                       TextColor: index==state.value ? state.txtColor : Colors.black54,
                                        // FromTop: 50,
                                        TextString: contentOfButton[index],
                                        FontSize: 18,
@@ -175,7 +173,7 @@ class _Settings_PageState extends State<Settings_Page> {
                      ReusableText(
                        FromTop: 50,
                        FromBottom: 10,
-                       TextColor: ColorCollections.Black,
+                       TextColor: ColorCollections.TeritiaryColor,
                        TextString: "Preferred subjects",
                        FontSize: 18,
                        // TextFontWeight: FontWeight.bold,
@@ -185,9 +183,10 @@ class _Settings_PageState extends State<Settings_Page> {
                          // TODO: implement listener
                        },
                        builder: (context, state) {
-                         print("value: ${state.preferredSelectedSubject}");
+                         print("Your Preferred subject selected value index: ${state.preferredSelectedSubject}");
                          final preferredSubject = state.preferredSelectedSubject ?? [];
                          return GridView.count(
+                           physics: NeverScrollableScrollPhysics(),
                            crossAxisSpacing: 5,
                            mainAxisSpacing: 5,
                            childAspectRatio: 9 / 2,
@@ -237,7 +236,7 @@ class _Settings_PageState extends State<Settings_Page> {
                                      ),
                                      child: Center(
                                        child: ReusableText(
-                                         TextColor: preferredSubject.any((sub) => sub.value == index) ? Colors.white: Colors.black,
+                                         TextColor: preferredSubject.any((sub) => sub.value == index) ? Colors.white: Colors.black54,
                                          // FromTop: 50,
                                          TextString: preferredContentOfButton[index],
                                          FontSize: 18,
@@ -256,7 +255,7 @@ class _Settings_PageState extends State<Settings_Page> {
                      ReusableText(
                        FromTop: 50,
                        FromBottom: 10,
-                       TextColor: ColorCollections.Black,
+                       TextColor: ColorCollections.TeritiaryColor,
                        TextString: "Subjects to improve",
                        FontSize: 18,
                        // TextFontWeight: FontWeight.bold,
@@ -266,9 +265,10 @@ class _Settings_PageState extends State<Settings_Page> {
                          // TODO: implement listener
                        },
                        builder: (context, state) {
-                         print("value: ${state.improvedSelectedSubject}");
+                         print("Your Subjects to improve selected value index: ${state.improvedSelectedSubject}");
                          final improvedSubject = state.improvedSelectedSubject ?? [];
                          return GridView.count(
+                           physics: NeverScrollableScrollPhysics(),
                            crossAxisSpacing: 5,
                            mainAxisSpacing: 5,
                            childAspectRatio: 9 / 2,
@@ -318,7 +318,7 @@ class _Settings_PageState extends State<Settings_Page> {
                                      ),
                                      child: Center(
                                        child: ReusableText(
-                                         TextColor: improvedSubject.any((sub) => sub.value == index) ? Colors.white: Colors.black,
+                                         TextColor: improvedSubject.any((sub) => sub.value == index) ? Colors.white: Colors.black54,
                                          // FromTop: 50,
                                          TextString: preferredContentOfButton[index],
                                          FontSize: 18,

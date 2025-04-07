@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:futurex/common_widget/common_widget.dart';
-import 'package:futurex/features/pages/content/content_page.dart';
 import 'package:futurex/features/pages/home/home_page.dart';
 import 'package:futurex/features/pages/quiz/quiz_page.dart';
 import 'package:futurex/features/pages/setting/setting_page.dart';
@@ -44,8 +43,6 @@ class _Index_PageState extends State<Index_Page> {
                 icon: Icon(Icons.timer_outlined), label: "Study"),
             BottomNavigationBarItem(icon: Icon(Icons.school), label: "Quiz"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.menu_book), label: "content"),
-            BottomNavigationBarItem(
                 icon: Icon(Icons.settings), label: "Settings"),
           ],
         ),
@@ -57,7 +54,6 @@ class _Index_PageState extends State<Index_Page> {
     Home_Page(),
     PomodoroTimerPage(),
     Quiz_Page(),
-    Content_Page(),
     Settings_Page()
   ];
 }

@@ -58,7 +58,7 @@ class NamedRouteSettings {
         route: NamedRoutes.HOMEPAGE,
         page: Quiz_Page(),
         bloc: BlocProvider(
-          create: (_) => QuizBloc(),
+          create: (_) => QuizBloc()..add(LoadQuestions()),
         ),
       ),
       pageEntity(
