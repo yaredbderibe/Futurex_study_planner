@@ -4,14 +4,14 @@ import 'package:futurex/utils/color_collections.dart';
 import 'package:intl/intl.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 
-class Welcome_Page_5 extends StatefulWidget {
-  const Welcome_Page_5({super.key});
+class OnboardingFinalDatePicker extends StatefulWidget {
+  const OnboardingFinalDatePicker({super.key});
 
   @override
-  State<Welcome_Page_5> createState() => _Welcome_Page_5State();
+  State<OnboardingFinalDatePicker> createState() => _OnboardingFinalDatePickerState();
 }
 
-class _Welcome_Page_5State extends State<Welcome_Page_5> {
+class _OnboardingFinalDatePickerState extends State<OnboardingFinalDatePicker> {
   DateTime? finalDate;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class _Welcome_Page_5State extends State<Welcome_Page_5> {
         margin: EdgeInsets.all(15),
         child: ListView(
           children: [
-            buildStepProgressBar(5, 5), // 4 filled steps out of 5
+            buildStepProgressBar(6, 11), // 4 filled steps out of 5
             Center(
               child: ReusableText(
                 FromTop: 70,
@@ -33,20 +33,23 @@ class _Welcome_Page_5State extends State<Welcome_Page_5> {
             ),
             Center(
               child: ReusableText(
+                FromLeft: 20,FromRight: 20,
                 FromTop: 30,
                 FromBottom: 0,
                 TextColor: Colors.grey.shade600,
-                TextString: "Select the date of your Final Exam this can",
+                TextString: "Now we know your exam date. Let's get you ready to ace it!",
                 FontSize: 16,
                 TextFontWeight: FontWeight.w400,
               ),
             ),
             Center(
               child: ReusableText(
-                // FromTop: 50,
+                FromLeft: 20,FromRight: 20,
+                FromTop: 30,
+                FromBottom: 0,
                 TextColor: Colors.grey.shade600,
-                TextString: " be modified later in settings",
-                FontSize: 17,
+                TextString: "Select the date of your Final Exam this will help us create a study schedule for you.",
+                FontSize: 16,
                 TextFontWeight: FontWeight.w400,
               ),
             ),
@@ -117,7 +120,7 @@ class _Welcome_Page_5State extends State<Welcome_Page_5> {
           Navigator.pop(context);
         } else {
           Navigator.pushNamedAndRemoveUntil(
-              context, '/index_page', (predicate) => true);
+              context, '/onboarding_goal_setup', (predicate) => true);
         }
       },
       child: Container(

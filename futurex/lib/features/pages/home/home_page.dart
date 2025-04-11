@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:futurex/common_widget/common_widget.dart';
 import 'package:futurex/features/pages/home/bloc/home_bloc.dart';
 import 'package:futurex/models/notificationModel.dart';
-import 'package:futurex/services/notification_services.dart';
+import 'package:futurex/services/app_constants.dart';
+import 'package:futurex/services/global.dart';
 import 'package:futurex/services/theme_mode_provider.dart';
 import 'package:futurex/utils/color_collections.dart';
 
@@ -23,8 +24,11 @@ class _Home_PageState extends State<Home_Page> {
 
   @override
   Widget build(BuildContext context) {
+    final themeData = Theme.of(context).colorScheme;
+    final userName = Global.storageServices.getUserData(AppConstants.USER_NAME);
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: themeData.background,
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: ListView(
@@ -34,24 +38,23 @@ class _Home_PageState extends State<Home_Page> {
               children: [
                 IconButton(
                   onPressed: () {
-
-                  context.read<ThemeManager>().toggleTheme();
+                    context.read<ThemeManager>().toggleTheme();
                   },
                   icon: Icon(Icons.light_mode),
                 ),
               ],
             ),
             ReusableText(
-              TextColor: Colors.black,
+              TextColor: themeData.primary,
               FromLeft: 15,
               FromRight: 10,
               FromTop: 0,
-              TextString: "Hi,Yared!",
+              TextString: "Hi,$userName!",
               FontSize: 35,
               TextFontWeight: FontWeight.w900,
             ),
             ReusableText(
-              TextColor: Colors.grey.shade500,
+              TextColor: themeData.onPrimary,
               FromLeft: 15,
               FromRight: 10,
               // FromTop: 130,
@@ -71,7 +74,7 @@ class _Home_PageState extends State<Home_Page> {
                   // width: 100,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
+                      color: themeData.primaryContainer,
                       // border: Border.all(color: Colors.grey.shade100),
                       boxShadow: [
                         BoxShadow(
@@ -85,7 +88,7 @@ class _Home_PageState extends State<Home_Page> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ReusableText(
-                        TextColor: Colors.black,
+                        TextColor: themeData.primary,
                         TextString: "Today's plan",
                         FontSize: 20,
                         FromBottom: 20,
@@ -102,12 +105,69 @@ class _Home_PageState extends State<Home_Page> {
                             return homePlanRow(context, planTxt[index],
                                 isPlanDone ?? false, index, planDone);
                           }),
-                      ReusableContainer(context, Icons.timer_outlined,
-                          "Start Study Sessions", 20),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/study_page');
+                        },
+                        child: ReusableContainer(context, Icons.timer_outlined,
+                            "Start Study Sessions", 20),
+                      ),
                     ],
                   ),
                 );
               },
+            ),
+            InkWell(
+              onTap: () {
+                //
+                Navigator.pushNamed(context, "/study_plan_setup_page");
+              },
+              child: Container(
+                margin: EdgeInsets.only(top: 30),
+                padding: EdgeInsets.all(12),
+                // height: 250,
+                // width: 100,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: themeData.primaryContainer,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.blue.shade200.withOpacity(0.2),
+                        blurRadius: 10.0,
+                        spreadRadius: 2.0,
+                        offset: Offset(0, 0),
+                      ),
+                    ]),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      children: [
+                        ReusableText(
+                          TextColor: themeData.primary,
+                          TextString: "Change your study plan setup",
+                          FontSize: 20,
+                          FromBottom: 10,
+                          TextFontWeight: FontWeight.w900,
+                        ),
+                        ReusableText(
+                          TextColor: themeData.onPrimary,
+                          TextString: "Modify your courses and schedule",
+                          FontSize: 16,
+                          FromBottom: 10,
+                          TextFontWeight: FontWeight.w500,
+                        ),
+                      ],
+                    ),
+                    Icon(
+                      Icons.keyboard_double_arrow_right,
+                      size: 30,
+                      color: themeData.primary,
+                    ),
+                  ],
+                ),
+              ),
             ),
             Container(
               margin: EdgeInsets.only(top: 30),
@@ -116,7 +176,7 @@ class _Home_PageState extends State<Home_Page> {
               // width: 100,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
+                  color: themeData.primaryContainer,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.blue.shade200.withOpacity(0.2),
@@ -129,14 +189,14 @@ class _Home_PageState extends State<Home_Page> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ReusableText(
-                    TextColor: Colors.black,
+                    TextColor: themeData.primary,
                     TextString: "Quick Morning Questions",
                     FontSize: 20,
                     FromBottom: 10,
                     TextFontWeight: FontWeight.w900,
                   ),
                   ReusableText(
-                    TextColor: Colors.black54,
+                    TextColor: themeData.onPrimary,
                     TextString: "Test your knowledge with 5 quick questions",
                     FontSize: 16,
                     FromBottom: 10,
@@ -290,7 +350,9 @@ class _Home_PageState extends State<Home_Page> {
             child: Text(
               content,
               style: TextStyle(
-                color: is_todo_done ? Colors.grey : Colors.black,
+                color: is_todo_done
+                    ? Theme.of(context).colorScheme.onPrimary
+                    : Theme.of(context).colorScheme.primary,
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
                 decoration: is_todo_done

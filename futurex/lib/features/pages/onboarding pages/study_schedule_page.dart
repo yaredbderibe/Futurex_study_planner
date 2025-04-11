@@ -9,16 +9,15 @@ import 'package:futurex/utils/color_collections.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-class Welcome_Profile_Setup_Page_2 extends StatefulWidget {
-  Welcome_Profile_Setup_Page_2({super.key});
+class OnboardingStudySchedule extends StatefulWidget {
+  OnboardingStudySchedule({super.key});
 
   @override
-  State<Welcome_Profile_Setup_Page_2> createState() =>
-      _Welcome_Profile_Setup_Page_2State();
+  State<OnboardingStudySchedule> createState() =>
+      _OnboardingStudyScheduleState();
 }
 
-class _Welcome_Profile_Setup_Page_2State
-    extends State<Welcome_Profile_Setup_Page_2> {
+class _OnboardingStudyScheduleState extends State<OnboardingStudySchedule> {
   int hour = 1;
   int minute = 0;
   String timeFormat = "AM";
@@ -35,7 +34,7 @@ class _Welcome_Profile_Setup_Page_2State
           padding: const EdgeInsets.all(20),
           child: ListView(
             children: [
-              buildStepProgressBar(2, 5),
+              buildStepProgressBar(2, 11),
               Center(
                 child: ReusableText(
                   FromTop: 70,
@@ -50,7 +49,7 @@ class _Welcome_Profile_Setup_Page_2State
                 children: [
                   ReusableText(
                     FromTop: 10,
-                TextColor: Colors.grey.shade600,
+                    TextColor: Colors.grey.shade600,
                     TextString: "Set your preferred study schedule to optimize",
                     FontSize: 16,
                     TextFontWeight: FontWeight.w500,
@@ -99,7 +98,8 @@ class _Welcome_Profile_Setup_Page_2State
                           textStyle: TextStyle(
                               color: Colors.grey.shade500, fontSize: 18),
                           selectedTextStyle: TextStyle(
-                              color: ColorCollections.QuaterneryColor, fontSize: 20),
+                              color: ColorCollections.QuaterneryColor,
+                              fontSize: 20),
                           decoration: BoxDecoration(
                               // border: Border(
                               //   top: BorderSide(color: ColorCollections.ThemeColor),
@@ -122,7 +122,8 @@ class _Welcome_Profile_Setup_Page_2State
                           textStyle: TextStyle(
                               color: Colors.grey.shade500, fontSize: 18),
                           selectedTextStyle: TextStyle(
-                              color: ColorCollections.QuaterneryColor, fontSize: 20),
+                              color: ColorCollections.QuaterneryColor,
+                              fontSize: 20),
                           decoration: BoxDecoration(
                               // border: Border(
                               //     top: BorderSide(color: ColorCollections.ThemeColor),
@@ -204,8 +205,7 @@ class _Welcome_Profile_Setup_Page_2State
                       FromTop: 10,
                       FromBottom: 10,
                       TextColor: ColorCollections.TeritiaryColor,
-                      TextString:
-                          "Study Duration(Weekday)",
+                      TextString: "Study Duration(Weekday)",
                       FontSize: 20,
                       TextFontWeight: FontWeight.w500,
                     ),
@@ -226,10 +226,12 @@ class _Welcome_Profile_Setup_Page_2State
                               inactiveTrackColor: Colors.grey.shade200,
                               thumbColor: ColorCollections.QuaterneryColor,
                               overlayColor:
-                                  ColorCollections.QuaterneryColor.withOpacity(0.2),
+                                  ColorCollections.QuaterneryColor.withOpacity(
+                                      0.2),
                               valueIndicatorShape:
                                   PaddleSliderValueIndicatorShape(),
-                              valueIndicatorColor: ColorCollections.QuaterneryColor,
+                              valueIndicatorColor:
+                                  ColorCollections.QuaterneryColor,
                               valueIndicatorTextStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -255,17 +257,18 @@ class _Welcome_Profile_Setup_Page_2State
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: List.generate(
-                                7,
-                                (index) =>  ReusableText(
-                                  TextString: '$index',
-                                  FontSize: 14,
-                                  TextColor:weekendStudyHour.round() == index
-                                      ? ColorCollections.QuaterneryColor
-                                      : Colors.grey,
-                                  TextFontWeight:  weekendStudyHour.round() == index
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                                ),
+                              7,
+                              (index) => ReusableText(
+                                TextString: '$index',
+                                FontSize: 14,
+                                TextColor: weekendStudyHour.round() == index
+                                    ? ColorCollections.QuaterneryColor
+                                    : Colors.grey,
+                                TextFontWeight:
+                                    weekendStudyHour.round() == index
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                              ),
                             ),
                           ),
                         ),
@@ -287,9 +290,8 @@ class _Welcome_Profile_Setup_Page_2State
                     ReusableText(
                       FromTop: 10,
                       FromBottom: 10,
-                      TextColor: ColorCollections.QuaterneryColor,
-                      TextString:
-                          "Weekend study hour(hours)",
+                      TextColor: ColorCollections.TeritiaryColor,
+                      TextString: "Weekend study hour(hours)",
                       FontSize: 20,
                       TextFontWeight: FontWeight.w500,
                     ),
@@ -310,10 +312,12 @@ class _Welcome_Profile_Setup_Page_2State
                               inactiveTrackColor: Colors.grey.shade200,
                               thumbColor: ColorCollections.QuaterneryColor,
                               overlayColor:
-                                  ColorCollections.QuaterneryColor.withOpacity(0.2),
+                                  ColorCollections.QuaterneryColor.withOpacity(
+                                      0.2),
                               valueIndicatorShape:
                                   PaddleSliderValueIndicatorShape(),
-                              valueIndicatorColor: ColorCollections.QuaterneryColor,
+                              valueIndicatorColor:
+                                  ColorCollections.QuaterneryColor,
                               valueIndicatorTextStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -340,19 +344,18 @@ class _Welcome_Profile_Setup_Page_2State
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: List.generate(
                                 7,
-                                (index) =>
-                                    ReusableText(
-                                        TextString: '$index',
-                                        FontSize: 14,
-                                        TextColor:StudyDurationHour.round() == index
-                                            ? ColorCollections.QuaterneryColor
-                                            : Colors.grey,
-                                         TextFontWeight:  StudyDurationHour.round() == index
-                                             ? FontWeight.bold
-                                             : FontWeight.normal,
-                                    )
-
-                            ),
+                                (index) => ReusableText(
+                                      TextString: '$index',
+                                      FontSize: 14,
+                                      TextColor:
+                                          StudyDurationHour.round() == index
+                                              ? ColorCollections.QuaterneryColor
+                                              : Colors.grey,
+                                      TextFontWeight:
+                                          StudyDurationHour.round() == index
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                    )),
                           ),
                         ),
                       ],
@@ -380,6 +383,12 @@ class _Welcome_Profile_Setup_Page_2State
                       TextFontWeight: FontWeight.w500,
                     ),
                     DropdownMenu(
+                        menuStyle: MenuStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                              Colors.blue.shade200),
+                        ),
+                        textStyle:
+                            TextStyle(color: ColorCollections.TeritiaryColor),
                         width: double.infinity,
                         onSelected: (value) {
                           setState(() {});
@@ -436,10 +445,134 @@ class _Welcome_Profile_Setup_Page_2State
                   ],
                 ),
               ),
-              SizedBox(height: 20,),
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.only(left: 20, top: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ReusableText(
+                      FromTop: 10,
+                      TextColor: Colors.black,
+                      TextString: "What time do you usually wake up?",
+                      FontSize: 20,
+                      TextFontWeight: FontWeight.w500,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        NumberPicker(
+                          value: hour,
+                          minValue: 0,
+                          maxValue: 100,
+                          onChanged: (value) {
+                            setState(() {
+                              hour = value;
+                            });
+                          },
+                          textStyle: TextStyle(
+                              color: Colors.grey.shade500, fontSize: 18),
+                          selectedTextStyle: TextStyle(
+                              color: ColorCollections.QuaterneryColor,
+                              fontSize: 20),
+                          decoration: BoxDecoration(),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        NumberPicker(
+                          value: minute,
+                          minValue: 0,
+                          maxValue: 100,
+                          onChanged: (value) {
+                            setState(() {
+                              minute = value;
+                            });
+                          },
+                          textStyle: TextStyle(
+                              color: Colors.grey.shade500, fontSize: 18),
+                          selectedTextStyle: TextStyle(
+                              color: ColorCollections.QuaterneryColor,
+                              fontSize: 20),
+                          decoration: BoxDecoration(
+                              // border: Border(
+                              //     top: BorderSide(color: ColorCollections.ThemeColor),
+                              //     bottom: BorderSide(color: ColorCollections.ThemeColor),
+                              // ),
+                              ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      timeFormat = "AM";
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 80,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: timeFormat == "AM"
+                                          ? ColorCollections.QuaterneryColor
+                                          : Colors.blue.shade100,
+                                    ),
+                                    child: Center(
+                                      child: ReusableText(
+                                        TextString: "AM",
+                                        FontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      timeFormat = "PM";
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 20),
+                                    height: 40,
+                                    width: 80,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: timeFormat == "PM"
+                                          ? ColorCollections.QuaterneryColor
+                                          : Colors.blue.shade100,
+                                    ),
+                                    child: Center(
+                                      child: ReusableText(
+                                        TextString: "PM",
+                                        FontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               reusableButtonContainer(context, "Continue",
                   ColorCollections.QuaterneryColor, Colors.white),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               reusableButtonContainer(
                   context, "Back", Colors.white, Colors.black),
             ],
@@ -466,7 +599,7 @@ class _Welcome_Profile_Setup_Page_2State
           Navigator.pop(context);
         } else {
           Navigator.pushNamedAndRemoveUntil(
-              context, '/welcome_profile_setup_3_page', (predicate) => true);
+              context, '/onboarding_academic_information', (predicate) => true);
         }
       },
       child: Container(

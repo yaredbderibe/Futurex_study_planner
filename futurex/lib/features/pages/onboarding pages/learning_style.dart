@@ -3,14 +3,14 @@ import 'package:futurex/common_widget/common_widget.dart';
 import 'package:futurex/utils/color_collections.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 
-class Welcome_Page_3 extends StatefulWidget {
-  const Welcome_Page_3({super.key});
+class OnboardingLearningStyle extends StatefulWidget {
+  const OnboardingLearningStyle({super.key});
 
   @override
-  State<Welcome_Page_3> createState() => _Welcome_Page_3State();
+  State<OnboardingLearningStyle> createState() => _OnboardingLearningStyleState();
 }
 
-class _Welcome_Page_3State extends State<Welcome_Page_3> {
+class _OnboardingLearningStyleState extends State<OnboardingLearningStyle> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +19,7 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
         margin: EdgeInsets.all(15),
         child: ListView(
           children: [
-            buildStepProgressBar(3, 5), // 2 filled steps out of 5
-
+            buildStepProgressBar(4, 11), // 2 filled steps out of 5
             Center(
               child: ReusableText(
                 FromTop: 70,
@@ -35,7 +34,7 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
                 FromTop: 10,
                 FromBottom: 0,
                 TextColor: Colors.grey.shade700,
-                TextString: "Rank your preferred learning methods",
+                TextString: "Knowing how you learn best will help us support",
                 FontSize: 16,
                 TextFontWeight: FontWeight.w500,
               ),
@@ -44,7 +43,7 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
               child: ReusableText(
                 // FromTop: 50,
                 TextColor: Colors.grey.shade700,
-                TextString: "Top being your most favorite",
+                TextString: "you better. You're on the right track!",
                 FontSize: 16,
                 TextFontWeight: FontWeight.w500,
               ),
@@ -161,6 +160,10 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
 
   void updateMySubjectPosition(int oldIndex, int newIndex) {
     setState(() {
+      if (oldIndex < newIndex) {
+        newIndex -= 1;
+      }
+
       final course = preferredWay.removeAt(oldIndex);
       final icon = icons.removeAt(oldIndex);
 
@@ -177,7 +180,7 @@ class _Welcome_Page_3State extends State<Welcome_Page_3> {
           Navigator.pop(context);
         } else {
           Navigator.pushNamedAndRemoveUntil(
-              context, '/welcome_profile_setup_4_page', (predicate) => true);
+              context, '/onboarding_course_difficulty', (predicate) => true);
         }
       },
       child: Container(

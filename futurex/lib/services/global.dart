@@ -5,11 +5,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Global {
   static late StorageServices storageServices;
-
   static Future init() async {
     WidgetsFlutterBinding.ensureInitialized();
     storageServices = await StorageServices().init();
     await OnboardingService().initialize();
-    // await dotenv.load(fileName: ".env");
+    await dotenv.load(fileName: ".env");
   }
 }

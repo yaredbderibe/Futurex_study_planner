@@ -34,6 +34,14 @@ class StorageServices {
     return _prefs.getBool("notificationAllowed") ?? true;
   }
 
+Future<void> saveUserData(String key, String value) async {
+  await _prefs.setString(key,value);
+}
+
+String getUserData(String key) {
+  return _prefs.getString(key) ?? "Username";
+}
+
 
 
   // Future<void> saveUserData(String key, UserData value) async {

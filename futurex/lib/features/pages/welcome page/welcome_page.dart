@@ -15,107 +15,117 @@ class _Welcome_PageState extends State<Welcome_Page> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorCollections.QuaterneryColor,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        body: ListView(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                DropdownMenu(
-                     textStyle:const TextStyle(color: ColorCollections.PrimaryColor),
-                    onSelected: (value) {
-                      setState(() {});
-                    },
-                    initialSelection: "English",
-                    inputDecorationTheme: const InputDecorationTheme(
-                      labelStyle:TextStyle(color: ColorCollections.PrimaryColor),
-                      suffixIconColor:ColorCollections.PrimaryColor,
-                      fillColor: Colors.transparent,
-                      enabledBorder: OutlineInputBorder(
-                         borderSide: BorderSide.none// Unfocused border
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    DropdownMenu(
+                      menuStyle: MenuStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                            ColorCollections.QuaterneryColor),
                       ),
-                      focusedBorder: OutlineInputBorder(
-
+                      textStyle:
+                          const TextStyle(color: ColorCollections.PrimaryColor),
+                      onSelected: (value) {
+                        setState(() {});
+                      },
+                      initialSelection: "English",
+                      inputDecorationTheme: const InputDecorationTheme(
+                        labelStyle:
+                            TextStyle(color: ColorCollections.PrimaryColor),
+                        suffixIconColor: ColorCollections.PrimaryColor,
+                        fillColor: Colors.transparent,
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none // Unfocused border
+                            ),
+                        focusedBorder: OutlineInputBorder(),
                       ),
+                      dropdownMenuEntries: const [
+                        DropdownMenuEntry(
+                          value: "English",
+                          label: "English",
+                        ),
+                        DropdownMenuEntry(
+                          value: "Amharic",
+                          label: "Amharic",
+                        ),
+                      ],
                     ),
-                    dropdownMenuEntries: const [
-                      DropdownMenuEntry(
-                        value: "English",
-                        label: "English",
-                      ),
-                      DropdownMenuEntry(
-                        value: "Amharic",
-                        label: "Amharic",
-                      ),
-                    ],
+                  ],
                 ),
-              ],
-            ),
-            Center(
-              child: Container(
-                padding: EdgeInsets.only(top: 20),
-                child: Image.asset(
-                  "assets/logo/futurex_logo.png",
-                  height: 70,
-                ),
-              ),
-            ),
-            ReusableText(
-              FromTop: 15,
-              TextString: "Your personal study assistant",
-              FontSize: 25,
-            ),
-            ReusableText(
-              FromLeft: 15,
-              FromRight: 10,
-              FromTop: 10,
-              TextString: "Smart study timer, daily quizzes, and progress",
-              FontSize: 15,
-            ),
-            ReusableText(
-              TextString: "tracking to help you succeed",
-              FontSize: 15,
-            ),
-            ReusableContainer(
-                context,
-                Icons.timer_outlined,
-                "Smart Study Timer",
-                "Focus better with our Pomodoro timer",
-                40),
-            ReusableContainer(context, Icons.psychology, "Daily Quizzes",
-                "Test your knowledge regularly", 15),
-            ReusableContainer(context, Icons.analytics, "Track Progress",
-                "Monitor your improvement over time", 15),
-            SizedBox(
-              height: 40,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(context,
-                    '/welcome_profile_setup_1_page', (predicate) => true);
-              },
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                  color: ColorCollections.PrimaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: ReusableText(
-                    TextColor: ColorCollections.QuaterneryColor,
-                    TextString: "Get Started",
-                    FontSize: 18,
-                    TextFontWeight: FontWeight.bold,
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.only(top: 20),
+                    child: Image.asset(
+                      "assets/logo/futurex_logo.png",
+                      height: 70,
+                    ),
                   ),
                 ),
-              ),
-            ),
-            ReusableText(
-              TextColor: ColorCollections.PrimaryColor,
-              FromTop: 10,
-              TextString: "Takes only 2 minutes to set up",
-              FontSize: 16,
+                ReusableText(
+                  FromTop: 15,
+                  TextString: "Your personal study assistant",
+                  FontSize: 25,
+                ),
+                ReusableText(
+                  FromLeft: 15,
+                  FromRight: 10,
+                  FromTop: 10,
+                  TextString: "Smart study timer, daily quizzes, and progress",
+                  FontSize: 15,
+                ),
+                ReusableText(
+                  TextString: "tracking to help you succeed",
+                  FontSize: 15,
+                ),
+                ReusableContainer(
+                    context,
+                    Icons.timer_outlined,
+                    "Smart Study Timer",
+                    "Focus better with our Pomodoro timer",
+                    40),
+                ReusableContainer(context, Icons.psychology, "Daily Quizzes",
+                    "Test your knowledge regularly", 15),
+                ReusableContainer(context, Icons.analytics, "Track Progress",
+                    "Monitor your improvement over time", 15),
+                SizedBox(
+                  height: 40,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/onboarding_personal_information_page',
+                        (predicate) => true);
+                  },
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    decoration: BoxDecoration(
+                      color: ColorCollections.PrimaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: ReusableText(
+                        TextColor: ColorCollections.QuaterneryColor,
+                        TextString: "Get Started",
+                        FontSize: 18,
+                        TextFontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                ReusableText(
+                  TextColor: ColorCollections.PrimaryColor,
+                  FromTop: 10,
+                  TextString: "Takes only 2 minutes to set up",
+                  FontSize: 16,
+                ),
+              ],
             ),
           ],
         ),

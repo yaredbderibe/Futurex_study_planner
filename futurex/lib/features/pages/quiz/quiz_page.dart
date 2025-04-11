@@ -15,9 +15,11 @@ class _Quiz_PageState extends State<Quiz_Page> {
   // int questionIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final themeData = Theme.of(context).colorScheme;
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: themeData.background,
         body: Container(
           margin: EdgeInsets.all(15),
           child: BlocBuilder<QuizBloc, QuizState>(
@@ -31,15 +33,16 @@ class _Quiz_PageState extends State<Quiz_Page> {
               return ListView(
                 children: [
                   ReusableText(
-                    TextColor: Colors.black,
+                    TextColor: themeData.primary,
                     TextString: "Daily Challenge",
                     FontSize: 25,
                     TextFontWeight: FontWeight.w900,
                     // TextFontWeight: FontWeight.bold,
                   ),
                   ReusableText(
-                    TextColor: Colors.grey.shade700,
-                    TextString: 'Question ${state.currentIndex + 1} of $totalQuestions',
+                    TextColor: themeData.onPrimary,
+                    TextString:
+                        'Question ${state.currentIndex + 1} of $totalQuestions',
                     FontSize: 20,
                     // TextFontWeight: FontWeight.w900,
                     // TextFontWeight: FontWeight.bold,
@@ -48,16 +51,16 @@ class _Quiz_PageState extends State<Quiz_Page> {
                     margin: EdgeInsets.only(top: 30),
                     padding: EdgeInsets.only(top: 20),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
+                      borderRadius: BorderRadius.circular(10),
+                      color: themeData.primaryContainer,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ReusableText(
                           FromLeft: 30,
-                          TextColor: Colors.grey.shade900,
-                          TextString:
-                              "${question.text}",
+                          TextColor: themeData.primary,
+                          TextString: "${question.text}",
                           FontSize: 18,
                           TextFontWeight: FontWeight.w500,
                           // TextFontWeight: FontWeight.bold,
@@ -74,8 +77,8 @@ class _Quiz_PageState extends State<Quiz_Page> {
                             bgColor = isCorrectAnswer
                                 ? Colors.green
                                 : isSelected
-                                ? Colors.red
-                                : null;
+                                    ? Colors.red
+                                    : null;
                           } else if (isSelected) {
                             bgColor = Colors.blue;
                           }
@@ -84,53 +87,54 @@ class _Quiz_PageState extends State<Quiz_Page> {
                             margin: EdgeInsets.only(top: 30),
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: themeData.primaryContainer,
                               borderRadius: BorderRadius.circular(10),
                               // border: Border.all(color: Colors.grey.shade200),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                QuizReusableChoiceContainer(
-                                    context,
-                                    "${option.text}",
-                                    index,
-                                    state,
-                                    bgColor
-                                ),
+                                QuizReusableChoiceContainer(context,
+                                    "${option.text}", index, state, bgColor),
                               ],
                             ),
                           );
                         }),
-                        state.selectedAnswerIndex!=null ?  ExpansionTile(
-                          title: ReusableText(
-                            TextColor: Colors.black,
-                            TextString: "Explanation",
-                            FontSize: 18,
-                          ),
-                          children: [
-                            ReusableText(
-                              FromLeft: 10,
-                              FromRight: 10,
-                              TextColor: Colors.grey.shade700,
-                              TextString: question.explanation,
-                              FontSize: 16,
-                            ),
-                          ],
-                        ):SizedBox(),
+                        state.selectedAnswerIndex != null
+                            ? ExpansionTile(
+                                title: ReusableText(
+                                  TextColor: themeData.primary,
+                                  TextString: "Explanation",
+                                  FontSize: 18,
+                                ),
+                                children: [
+                                  ReusableText(
+                                    FromLeft: 10,
+                                    FromRight: 10,
+                                    TextColor: themeData.onPrimary,
+                                    TextString: question.explanation,
+                                    FontSize: 16,
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
                       ],
                     ),
                   ),
-                  SizedBox(height: 30,),
+                  SizedBox(
+                    height: 30,
+                  ),
                   Row(
                     children: [
                       Expanded(
-                          child: reusableButtonContainer(
-                              context, "Previous", Colors.white, Colors.black,state)),
-                      SizedBox(width: 10,),
+                          child: reusableButtonContainer(context, "Previous",
+                              Colors.white, Colors.black, state)),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Expanded(
-                          child: reusableButtonContainer(
-                              context, "Next", Colors.blue, Colors.white,state)),
+                          child: reusableButtonContainer(context, "Next",
+                              Colors.blue, Colors.white, state)),
                     ],
                   ),
                 ],
@@ -142,15 +146,16 @@ class _Quiz_PageState extends State<Quiz_Page> {
     );
   }
 
-  Widget reusableButtonContainer(
-      BuildContext context, String content, Color contColor, Color txtColor,dynamic state) {
+  Widget reusableButtonContainer(BuildContext context, String content,
+      Color contColor, Color txtColor, dynamic state) {
     return InkWell(
       onTap: () {
         if (content == "Next") {
           if (state.isAnswered && !state.isLastQuestion) {
             context.read<QuizBloc>().add(NextQuestion());
-          }else if(state.isLastQuestion){
-             Navigator.push(context, MaterialPageRoute(builder: (context)=>QuizResult()));
+          } else if (state.isLastQuestion) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => QuizResult()));
           }
         } else {
           if (state.currentIndex > 0) {
@@ -181,8 +186,8 @@ class _Quiz_PageState extends State<Quiz_Page> {
     );
   }
 
-  Widget QuizReusableChoiceContainer(
-      BuildContext context, String choiceContent, int index, dynamic state,Color? bgColor) {
+  Widget QuizReusableChoiceContainer(BuildContext context, String choiceContent,
+      int index, dynamic state, Color? bgColor) {
     return InkWell(
       onTap: () {
         if (!state.isAnswered) {
@@ -194,7 +199,7 @@ class _Quiz_PageState extends State<Quiz_Page> {
       },
       child: Container(
         margin: EdgeInsets.only(top: 0),
-        padding: EdgeInsets.only(left: 15,bottom: 10),
+        padding: EdgeInsets.only(left: 15, bottom: 10),
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(10),
@@ -204,7 +209,9 @@ class _Quiz_PageState extends State<Quiz_Page> {
         width: double.infinity,
         child: ReusableText(
           FromTop: 15,
-          TextColor: bgColor != null ? Colors.white : Colors.grey.shade900,
+          TextColor: bgColor != null
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.primary,
           TextString: choiceContent,
           FontSize: 18,
           // TextFontWeight: FontWeight.w900,

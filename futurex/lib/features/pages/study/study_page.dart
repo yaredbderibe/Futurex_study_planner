@@ -14,7 +14,6 @@ class PomodoroTimerPage extends StatefulWidget {
 }
 
 class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
-
   //variables
   static const int _focusDuration = 25 * 60; // 25 minutes in seconds
   static const int _breakDuration = 5 * 60; // 5 minutes in seconds
@@ -26,12 +25,9 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
   //instances
   final OnboardingService _onboardingService = OnboardingService();
 
-
   //global key
   final GlobalKey studyInfo = GlobalKey();
   final GlobalKey startInfo = GlobalKey();
-
-
 
   //functions
   String get _formattedTime {
@@ -90,7 +86,6 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
     });
   }
 
-
   void _setupOnboarding() {
     _onboardingService.startOnboarding(context);
     _onboardingService
@@ -105,7 +100,8 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
       FeatureHighlight(
         targetKey: studyInfo,
         title: 'Study',
-        description: 'This Study page uses the Pomodoro Technique for effective focus 25 min Focused study session 5 min Short break.',
+        description:
+            'This Study page uses the Pomodoro Technique for effective focus 25 min Focused study session 5 min Short break.',
         icon: Icons.timer_outlined,
         shape: HighlightShape.rectangle,
       ),
@@ -120,23 +116,22 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
         shape: HighlightShape.rectangle,
       ),
     ]);
-
   }
 
   void _setTourTheme() {
-      _onboardingService.setTheme(FeatureTourTheme(
-        overlayColor: Colors.black54,
-        highlightColor: Colors.blue,
-        cardColor: Colors.grey[800] ?? Colors.grey,
-        textColor: Colors.white,
-        primaryColor: Colors.blue,
-        titleStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        bodyStyle: const TextStyle(fontSize: 16),
-        buttonStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        cornerRadius: 10.0,
-        highlightBorderWidth: 2.0,
-      ));
-    }
+    _onboardingService.setTheme(FeatureTourTheme(
+      overlayColor: Colors.black54,
+      highlightColor: Colors.blue,
+      cardColor: Colors.grey[800] ?? Colors.grey,
+      textColor: Colors.white,
+      primaryColor: Colors.blue,
+      titleStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      bodyStyle: const TextStyle(fontSize: 16),
+      buttonStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+      cornerRadius: 10.0,
+      highlightBorderWidth: 2.0,
+    ));
+  }
 
   @override
   void initState() {
@@ -148,7 +143,6 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
     super.initState();
   }
 
-
   @override
   void dispose() {
     _timer?.cancel();
@@ -157,8 +151,10 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeData = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: ColorCollections.SecondaryColor,
+      backgroundColor: themeData.background,
       body: Container(
         margin: EdgeInsets.all(15),
         child: ListView(
@@ -167,7 +163,7 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ReusableText(
-                  TextColor: ColorCollections.TeritiaryColor,
+                  TextColor: themeData.primary,
                   FromTop: 10,
                   FromBottom: 10,
                   TextString: "Study Session",
@@ -175,13 +171,15 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
                   TextFontWeight: FontWeight.bold,
                 ),
                 Tooltip(
-                  message: 'This Study page uses the Pomodoro Technique for effective focus 25 min Focused study session 5 min Short break.',
+                  message:
+                      'This Study page uses the Pomodoro Technique for effective focus 25 min Focused study session 5 min Short break.',
                   child: IconButton(
                     key: studyInfo,
-                    onPressed: () {
-
-                    },
-                    icon: Icon(Icons.info,color: Colors.blue,),
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.info,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ],
@@ -193,9 +191,11 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
                   ? 'Focus for 25 minutes'
                   : 'Take a break for 5 minutes',
               FontSize: 18,
-              TextColor: Colors.grey.shade700,
+              TextColor: themeData.onPrimary,
             ),
             SizedBox(height: 80),
+
+            //
             CircularPercentIndicator(
               radius: 100.0,
               lineWidth: 8.0,
@@ -204,11 +204,13 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
               center: ReusableText(
                 TextString: _formattedTime,
                 FontSize: 48,
-                TextColor: ColorCollections.TeritiaryColor,
+                TextColor: themeData.primary,
               ),
               progressColor: _isFocusTime ? Colors.blue : Colors.green,
               backgroundColor: Colors.blue.shade100,
             ),
+
+            //
             SizedBox(height: 10),
             _isFocusTime
                 ? _isRunning
@@ -234,7 +236,7 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
                         children: [
                           const SizedBox(height: 40.0),
                           Container(
-                            key: !_isRunning ? startInfo:null,
+                            key: !_isRunning ? startInfo : null,
                             child: reusableButtonContainer(
                                 context,
                                 _isRunning ? 'Pause' : 'Start',

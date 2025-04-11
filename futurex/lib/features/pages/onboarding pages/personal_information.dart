@@ -3,20 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:futurex/common_widget/common_widget.dart';
 import 'package:futurex/features/pages/welcome%20page/welcome_page_1_bloc/welcome_profile_setup_bloc.dart';
+import 'package:futurex/services/app_constants.dart';
+import 'package:futurex/services/global.dart';
 import 'package:futurex/utils/color_collections.dart';
+import 'package:futurex/utils/common_snackbar.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 
-class Welcome_Profile_Setup_Page_1 extends StatefulWidget {
-  Welcome_Profile_Setup_Page_1({super.key});
+class OnboardingPersonalInformation extends StatefulWidget {
+  OnboardingPersonalInformation({super.key});
 
   @override
-  State<Welcome_Profile_Setup_Page_1> createState() =>
-      _Welcome_Profile_Setup_Page_1State();
+  State<OnboardingPersonalInformation> createState() =>
+      _OnboardingPersonalInformationState();
 }
 
-class _Welcome_Profile_Setup_Page_1State
-    extends State<Welcome_Profile_Setup_Page_1> {
+class _OnboardingPersonalInformationState
+    extends State<OnboardingPersonalInformation> {
   String selectedGrade = 'None';
+  String name = '';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,7 +29,8 @@ class _Welcome_Profile_Setup_Page_1State
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildStepProgressBar(1, 5),
+            Container(
+                margin: EdgeInsets.all(10), child: buildStepProgressBar(1, 11)),
             ReusableText(
               TextColor: Colors.black,
               FromLeft: 15,
@@ -59,11 +64,16 @@ class _Welcome_Profile_Setup_Page_1State
               ],
             ),
             reusableTextField(
+              context: context,
               FromLeft: 15,
               FromRight: 25,
               hintText: "Enter your name",
               textType: "name",
-              onchange: (onchange) {},
+              onchange: (onchange) {
+                setState(() {
+                  name = onchange;
+                });
+              },
             ),
             Row(
               children: [
@@ -94,8 +104,11 @@ class _Welcome_Profile_Setup_Page_1State
                   height: 50,
                   child: DropdownMenu(
                       menuStyle: MenuStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll(ColorCollections.SecondaryColor)),
+                        backgroundColor:
+                            WidgetStateProperty.all(Colors.blue.shade100),
+                      ),
+                      textStyle:
+                          TextStyle(color: ColorCollections.TeritiaryColor),
                       width: double.infinity,
                       onSelected: (value) {
                         setState(() {
@@ -104,7 +117,7 @@ class _Welcome_Profile_Setup_Page_1State
                       },
                       initialSelection: "None",
                       inputDecorationTheme: InputDecorationTheme(
-                        fillColor: ColorCollections.SecondaryColor,
+                        fillColor: Colors.grey[200]!,
                         border: const OutlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.white), // Border color
@@ -149,8 +162,17 @@ class _Welcome_Profile_Setup_Page_1State
             Center(
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamedAndRemoveUntil(context,
-                      '/welcome_profile_setup_2_page', (predicate) => true);
+                  if (name.isNotEmpty) {
+                    Global.storageServices.saveUserData(AppConstants.USER_NAME,name);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/study_schedule_page', (predicate) => true);
+                  } else {
+                    commonSnackBar(
+                        context,
+                        "Name is not set,Please provide your name",
+                        ColorCollections.PrimaryColor,
+                        Colors.red.shade900);
+                  }
                 },
                 child: Container(
                   height: 50,
@@ -170,7 +192,9 @@ class _Welcome_Profile_Setup_Page_1State
                 ),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Center(
               child: InkWell(
                 onTap: () {

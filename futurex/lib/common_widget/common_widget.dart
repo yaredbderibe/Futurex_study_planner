@@ -10,6 +10,7 @@ import 'package:futurex/services/app_constants.dart';
 import 'package:futurex/services/global.dart';
 import 'package:futurex/utils/color_collections.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class FullPageContainer extends StatelessWidget {
   const FullPageContainer({super.key});
@@ -132,6 +133,7 @@ class AppButton extends StatelessWidget {
 //reusable text field
 
 Widget reusableTextField({
+  required BuildContext context,
   String? icon_name,
   String suffix_icon_name = '',
   required String hintText,
@@ -142,7 +144,7 @@ Widget reusableTextField({
   double FromTop = 0,
   double FromBottom = 0,
   double FromRight = 0,
-  double FromLeft = 0, 
+  double FromLeft = 0,
 }) {
   return Container(
     height: 45.h,
@@ -154,9 +156,9 @@ Widget reusableTextField({
       right: FromRight.w,
     ),
     decoration: BoxDecoration(
-      color: ColorCollections.PrimaryColor,
+      color: Theme.of(context).colorScheme.primaryContainer,
       borderRadius: BorderRadius.circular(10),
-      border: Border.all(color:  Colors.grey.shade100),
+      // border: Border.all(color: Colors.grey.shade100),
     ),
     child: Row(
       // mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -175,13 +177,14 @@ Widget reusableTextField({
             : SizedBox(),
         Expanded(
           child: TextField(
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
             onChanged: (value) => onchange!(value),
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               isDense: true,
               // suffixIcon: suffixIcon,
               hintText: hintText,
-              hintStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+              hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
               border: const OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.transparent,
@@ -213,6 +216,111 @@ Widget reusableTextField({
             margin: const EdgeInsets.only(left: 17),
             child: Image.asset("assets/icons/$suffix_icon_name.png"),
           ),
+      ],
+    ),
+  );
+}
+
+Widget reusableChatBotTextField({
+  required BuildContext context,
+  String? icon_name,
+  String suffix_icon_name = '',
+  required String hintText,
+  required String textType,
+  // required void Function(String values)? onchange,
+  required VoidCallback onTap,
+  double WidthOfContainer = 300,
+  double widthOfTextField = 150,
+  double FromTop = 0,
+  double FromBottom = 0,
+  double FromRight = 0,
+  double FromLeft = 0,
+  required TextEditingController controller,
+}) {
+  return Container(
+    height: 45.h,
+    // width: WidthOfContainer.w,
+    margin: EdgeInsets.only(
+      top: FromTop.w,
+      bottom: FromBottom.w,
+      left: FromLeft.w,
+      right: FromRight.w,
+    ),
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(color: Colors.grey.shade100),
+    ),
+    child: Row(
+      // mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        icon_name != null
+            ? Container(
+                height: 16.w,
+                width: 16.w,
+                margin: const EdgeInsets.only(left: 17),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/icons/flat_icons/$icon_name.png"),
+                  ),
+                ),
+              )
+            : SizedBox(),
+        Expanded(
+          child: TextField(
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            controller: controller,
+            // onChanged: (value) => onchange!(value),
+            keyboardType: TextInputType.multiline,
+            decoration: InputDecoration(
+              isDense: true,
+              // suffixIcon: suffixIcon,
+              hintText: hintText,
+              hintStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                ),
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                ),
+              ),
+              disabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                ),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+            obscureText: textType == "password" ? true : false,
+          ),
+        ),
+        InkWell(
+          onTap: onTap,
+          child: Container(
+            height: 35.w,
+            width: 35.w,
+            margin: const EdgeInsets.only(left: 17, right: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: Colors.grey.shade400)),
+            child: Image.asset(
+              "assets/icons/normals/send.png",
+              color: controller.text.isNotEmpty
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.surface,
+              height: 40,
+              width: 40,
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
       ],
     ),
   );
@@ -897,5 +1005,537 @@ Widget buildStepProgressBar(int currentStep, int totalSteps) {
         ),
       );
     }),
+  );
+}
+
+Widget CommonSliderWidget({
+  required BuildContext context,
+  required double maxValue,
+  required double minValue,
+  required double valuePicked,
+  required int division,
+  required bool selectedPoint,
+  required String labelText,
+  required ValueChanged<double> onChanged,
+}) {
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(2),
+        child: SliderTheme(
+          data: SliderTheme.of(context).copyWith(
+            trackHeight: 5,
+            thumbShape: RoundSliderThumbShape(
+              enabledThumbRadius: 12,
+              disabledThumbRadius: 12,
+              elevation: 4,
+            ),
+            activeTrackColor: Colors.grey.shade200,
+            inactiveTrackColor: Colors.grey.shade200,
+            thumbColor: ColorCollections.QuaterneryColor,
+            overlayColor: ColorCollections.QuaterneryColor.withOpacity(0.2),
+            valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+            valueIndicatorColor: ColorCollections.QuaterneryColor,
+            valueIndicatorTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          child: Slider(
+            value: valuePicked.clamp(
+                minValue, maxValue), // Ensures value stays in bounds
+            min: minValue,
+            max: maxValue,
+            divisions: division,
+            label: labelText,
+            onChanged: onChanged, // Directly use the callback
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ReusableText(
+              TextString: minValue.toStringAsFixed(0), // Dynamic min value
+              FontSize: 18,
+              TextColor: Theme.of(context).colorScheme.primary,
+            ),
+            ReusableText(
+              TextString: maxValue.toStringAsFixed(0), // Dynamic max value
+              FontSize: 18,
+              TextColor: Theme.of(context).colorScheme.primary,
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
+Widget ReusableSchedulingInformation({
+  required BuildContext context,
+  required double studyTimeOfDayInHour,
+  required double studyTimeOfDayInMinute,
+  required String studyTimeOfDayTimeFormat,
+  required double studyDurationPerWeekend,
+  required double studyWeekendHour,
+  required double studyWeekendMinute,
+  required String restDay,
+  required double wakeupTimeOfDayInHour,
+  required double wakeupTimeOfDayInMinute,
+  required String wakeupTimeOfDayTimeFormat,
+  required ValueChanged<int> studyTimeOfDayInHourFunction,
+  required ValueChanged<int> studyTimeOfDayInMinuteFunction,
+  required VoidCallback studyTimeOfDayTimeFormatFunction,
+  required ValueChanged<double> studyDurationPerWeekendFunction,
+  required ValueChanged<double> studyWeekendHourFunction,
+  required ValueChanged<String?>? restDayFunction,
+  required ValueChanged<int> wakeupTimeOfDayInHourFunction,
+  required ValueChanged<int> wakeupTimeOfDayInMinuteFunction,
+  required VoidCallback wakeupTimeOfDayTimeFormatFunction,
+}) {
+  return Column(
+    children: [
+      Container(
+        margin: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.only(left: 20, top: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ReusableText(
+              FromTop: 10,
+              TextColor: Theme.of(context).colorScheme.primary,
+              TextString: "On what time of the day do you usually study?",
+              FontSize: 20,
+              TextFontWeight: FontWeight.w500,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                NumberPicker(
+                  value: studyTimeOfDayInHour.toInt(),
+                  minValue: 0,
+                  maxValue: 100,
+                  onChanged: studyTimeOfDayInHourFunction,
+                  textStyle:
+                      TextStyle(color: Colors.grey.shade500, fontSize: 18),
+                  selectedTextStyle: TextStyle(
+                      color: ColorCollections.QuaterneryColor, fontSize: 20),
+                  decoration: BoxDecoration(
+                      // border: Border(
+                      //   top: BorderSide(color: ColorCollections.ThemeColor),
+                      //   bottom: BorderSide(color: ColorCollections.ThemeColor),
+                      // ),
+                      ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                NumberPicker(
+                  value: studyTimeOfDayInMinute.toInt(),
+                  minValue: 0,
+                  maxValue: 100,
+                  onChanged: studyTimeOfDayInMinuteFunction,
+                  textStyle:
+                      TextStyle(color: Colors.grey.shade500, fontSize: 18),
+                  selectedTextStyle: TextStyle(
+                      color: ColorCollections.QuaterneryColor, fontSize: 20),
+                  decoration: BoxDecoration(
+                      // border: Border(
+                      //     top: BorderSide(color: ColorCollections.ThemeColor),
+                      //     bottom: BorderSide(color: ColorCollections.ThemeColor),
+                      // ),
+                      ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: studyTimeOfDayTimeFormatFunction,
+                          child: Container(
+                            height: 40,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: studyTimeOfDayTimeFormat == "AM"
+                                  ? ColorCollections.QuaterneryColor
+                                  : Colors.blue.shade100,
+                            ),
+                            child: Center(
+                              child: ReusableText(
+                                TextString: "AM",
+                                FontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: studyTimeOfDayTimeFormatFunction,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 20),
+                            height: 40,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: studyTimeOfDayTimeFormat == "PM"
+                                  ? ColorCollections.QuaterneryColor
+                                  : Colors.blue.shade100,
+                            ),
+                            child: Center(
+                              child: ReusableText(
+                                TextString: "PM",
+                                FontSize: 16,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+      Container(
+        margin: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(left: 20, top: 10, bottom: 30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ReusableText(
+              FromTop: 10,
+              FromBottom: 10,
+              TextColor:Theme.of(context).colorScheme.primary,
+              TextString: "Study Duration(Weekday)",
+              FontSize: 20,
+              TextFontWeight: FontWeight.w500,
+            ),
+            Column(
+              // mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      trackHeight: 5,
+                      thumbShape: RoundSliderThumbShape(
+                        enabledThumbRadius: 12,
+                        disabledThumbRadius: 12,
+                        elevation: 4,
+                      ),
+                      activeTrackColor: Colors.grey.shade200,
+                      inactiveTrackColor: Colors.grey.shade200,
+                      thumbColor: ColorCollections.QuaterneryColor,
+                      overlayColor:
+                          ColorCollections.QuaterneryColor.withOpacity(0.2),
+                      valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                      valueIndicatorColor: ColorCollections.QuaterneryColor,
+                      valueIndicatorTextStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    child: Slider(
+                      value: studyDurationPerWeekend,
+                      min: 0,
+                      max: 6,
+                      divisions: 7,
+                      label: '${studyDurationPerWeekend.round()} Hour',
+                      onChanged: studyDurationPerWeekendFunction,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: List.generate(
+                      7,
+                      (index) => ReusableText(
+                        TextString: '$index',
+                        FontSize: 14,
+                        TextColor: studyDurationPerWeekend.round() == index
+                            ? ColorCollections.QuaterneryColor
+                            : Colors.grey,
+                        TextFontWeight: studyDurationPerWeekend.round() == index
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+      Container(
+        margin: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(left: 20, top: 10, bottom: 30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ReusableText(
+              FromTop: 10,
+              FromBottom: 10,
+              TextColor: Theme.of(context).colorScheme.primary,
+              TextString: "Weekend study hour(hours)",
+              FontSize: 20,
+              TextFontWeight: FontWeight.w500,
+            ),
+            Column(
+              // mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      trackHeight: 5,
+                      thumbShape: RoundSliderThumbShape(
+                        enabledThumbRadius: 12,
+                        disabledThumbRadius: 12,
+                        elevation: 4,
+                      ),
+                      activeTrackColor: Colors.grey.shade200,
+                      inactiveTrackColor: Colors.grey.shade200,
+                      thumbColor: ColorCollections.QuaterneryColor,
+                      overlayColor:
+                          ColorCollections.QuaterneryColor.withOpacity(0.2),
+                      valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                      valueIndicatorColor: ColorCollections.QuaterneryColor,
+                      valueIndicatorTextStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    child: Slider(
+                      value: studyWeekendHour,
+                      min: 0,
+                      max: 6,
+                      divisions: 7,
+                      label: '${studyWeekendHour.round()} Hour',
+                      onChanged: studyWeekendHourFunction,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: List.generate(
+                        7,
+                        (index) => ReusableText(
+                              TextString: '$index',
+                              FontSize: 14,
+                              TextColor: studyWeekendHour.round() == index
+                                  ? ColorCollections.QuaterneryColor
+                                  : Colors.grey,
+                              TextFontWeight: studyWeekendHour.round() == index
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                            )),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+      Container(
+        margin: const EdgeInsets.only(top: 20),
+        padding:
+            const EdgeInsets.only(left: 20, top: 10, bottom: 30, right: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ReusableText(
+              FromTop: 20,
+              FromBottom: 30,
+              TextColor: Theme.of(context).colorScheme.primary,
+              TextString: "Rest Day",
+              FontSize: 18,
+              TextFontWeight: FontWeight.w500,
+            ),
+            DropdownMenu(
+                width: double.infinity,
+                onSelected: restDayFunction,
+                initialSelection: "None",
+                inputDecorationTheme: const InputDecorationTheme(
+                  border: OutlineInputBorder(
+                    // borderSide: BorderSide(color: Colors.white), // Border color
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    // borderSide:
+                    //     BorderSide(color: Colors.white), // Unfocused border
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    // borderSide:
+                    //     BorderSide(color: Colors.white), // Focused border
+                  ),
+                ),
+                dropdownMenuEntries: const [
+                  DropdownMenuEntry(
+                    value: "Monday",
+                    label: "Monday",
+                  ),
+                  DropdownMenuEntry(
+                    value: "Tuesday",
+                    label: "Tuesday",
+                  ),
+                  DropdownMenuEntry(
+                    value: "Wendsday",
+                    label: "Wendsday",
+                  ),
+                  DropdownMenuEntry(
+                    value: "Thursday",
+                    label: "Thursday",
+                  ),
+                  DropdownMenuEntry(
+                    value: "Friday",
+                    label: "Friday",
+                  ),
+                  DropdownMenuEntry(
+                    value: "Saturday",
+                    label: "Saturday",
+                  ),
+                  DropdownMenuEntry(
+                    value: "Sunday",
+                    label: "Sunday",
+                  ),
+                  DropdownMenuEntry(
+                    value: "None",
+                    label: "None",
+                  ),
+                ]),
+          ],
+        ),
+      ),
+      Container(
+        margin: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.only(left: 20, top: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ReusableText(
+              FromTop: 10,
+              TextColor: Theme.of(context).colorScheme.primary,
+              TextString: "What time do you usually wake up?",
+              FontSize: 20,
+              TextFontWeight: FontWeight.w500,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                NumberPicker(
+                  value: wakeupTimeOfDayInHour.toInt(),
+                  minValue: 0,
+                  maxValue: 100,
+                  onChanged: wakeupTimeOfDayInHourFunction,
+                  textStyle:
+                      TextStyle(color: Colors.grey.shade500, fontSize: 18),
+                  selectedTextStyle: TextStyle(
+                      color: ColorCollections.QuaterneryColor, fontSize: 20),
+                  decoration: BoxDecoration(),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                NumberPicker(
+                  value: wakeupTimeOfDayInMinute.toInt(),
+                  minValue: 0,
+                  maxValue: 100,
+                  onChanged: wakeupTimeOfDayInMinuteFunction,
+                  textStyle:
+                      TextStyle(color: Colors.grey.shade500, fontSize: 18),
+                  selectedTextStyle: TextStyle(
+                      color: ColorCollections.QuaterneryColor, fontSize: 20),
+                  decoration: BoxDecoration(
+                      // border: Border(
+                      //     top: BorderSide(color: ColorCollections.ThemeColor),
+                      //     bottom: BorderSide(color: ColorCollections.ThemeColor),
+                      // ),
+                      ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: wakeupTimeOfDayTimeFormatFunction,
+                          child: Container(
+                            height: 40,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: wakeupTimeOfDayTimeFormat == "AM"
+                                  ? ColorCollections.QuaterneryColor
+                                  : Colors.blue.shade100,
+                            ),
+                            child: Center(
+                              child: ReusableText(
+                                TextString: "AM",
+                                FontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: wakeupTimeOfDayTimeFormatFunction,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 20),
+                            height: 40,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: wakeupTimeOfDayTimeFormat == "PM"
+                                  ? ColorCollections.QuaterneryColor
+                                  : Colors.blue.shade100,
+                            ),
+                            child: Center(
+                              child: ReusableText(
+                                TextString: "PM",
+                                FontSize: 16,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    ],
   );
 }

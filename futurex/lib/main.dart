@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:futurex/features/pages/AI_page/ai_service.dart';
 import 'package:futurex/features/pages/home/home_page.dart';
 import 'package:futurex/route_handler/pages.dart';
 import 'package:futurex/services/global.dart';
@@ -23,7 +24,7 @@ void main() async {
         playSound: true,
         // soundSource: "resource://raw/res_custom_notification",
         channelDescription:
-            "Basic notification enables the notification for Basic event like when item matched exists.",
+        "Basic notification enables the notification for Basic event like when item matched exists.",
       ),
       NotificationChannel(
         channelKey: 'schedule_channel',
@@ -33,7 +34,7 @@ void main() async {
         channelShowBadge: true,
         locked: true,
         channelDescription:
-            "Schedule notification enables the notification for scheduled event like user not respond to the item matched.",
+        "Schedule notification enables the notification for scheduled event like user not respond to the item matched.",
       ),
     ],
   );
@@ -59,8 +60,8 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  themeListener(){
-    if(mounted){
+  themeListener() {
+    if (mounted) {
       setState(() {
 
       });
@@ -77,19 +78,25 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_)=>ThemeManager()),
-        ],
-        builder:(BuildContext context,child)=> MultiBlocProvider(
-          providers: [...NamedRouteSettings.allBlocProviders(context)],
-          child: MaterialApp(
-            theme: lightMode,
-            darkTheme: darkMode,
-            themeMode: context.watch<ThemeManager>().themeMode,
-            onGenerateRoute: NamedRouteSettings.GenerateRouteSettings,
-            debugShowCheckedModeBanner: false,
-          ),
+      child: RepositoryProvider(
+        create: (context) => AIService(),
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => ThemeManager()),
+          ],
+          builder: (BuildContext context, child) =>
+              MultiBlocProvider(
+                providers: [...NamedRouteSettings.allBlocProviders(context)],
+                child: MaterialApp(
+                  theme: lightMode,
+                  darkTheme: darkMode,
+                  themeMode: context
+                      .watch<ThemeManager>()
+                      .themeMode,
+                  onGenerateRoute: NamedRouteSettings.GenerateRouteSettings,
+                  debugShowCheckedModeBanner: false,
+                ),
+              ),
         ),
       ),
     );
