@@ -160,7 +160,8 @@ class _OnboardingLearningStyleState extends State<OnboardingLearningStyle> {
 
   void updateMySubjectPosition(int oldIndex, int newIndex) {
     setState(() {
-      if (oldIndex < newIndex) {
+
+      if (oldIndex < newIndex &&oldIndex+1 != newIndex) {
         newIndex -= 1;
       }
 
@@ -171,6 +172,7 @@ class _OnboardingLearningStyleState extends State<OnboardingLearningStyle> {
       preferredWay.insert(newIndex, course);
     });
   }
+
 
   Widget reusableButtonContainer(
       BuildContext context, String content, Color contColor, Color txtColor) {

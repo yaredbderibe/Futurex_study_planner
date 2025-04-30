@@ -1,10 +1,11 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:futurex/common_widget/common_widget.dart';
+import 'package:futurex/services/pomodoro_study_provider.dart';
 import 'package:futurex/utils/color_collections.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:flutter_feature_tour/flutter_feature_tour.dart';
+import 'package:provider/provider.dart';
 
 class PomodoroTimerPage extends StatefulWidget {
   const PomodoroTimerPage({super.key});
@@ -14,77 +15,12 @@ class PomodoroTimerPage extends StatefulWidget {
 }
 
 class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
-  //variables
-  static const int _focusDuration = 25 * 60; // 25 minutes in seconds
-  static const int _breakDuration = 5 * 60; // 5 minutes in seconds
-  int _remainingSeconds = _focusDuration;
-  bool _isRunning = false; // Start paused by default
-  bool _isFocusTime = true; // Start with focus time
-  Timer? _timer;
-
   //instances
   final OnboardingService _onboardingService = OnboardingService();
 
   //global key
   final GlobalKey studyInfo = GlobalKey();
   final GlobalKey startInfo = GlobalKey();
-
-  //functions
-  String get _formattedTime {
-    int minutes = _remainingSeconds ~/ 60;
-    int seconds = _remainingSeconds % 60;
-    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-  }
-
-  double get _progress {
-    final int currentDuration = _isFocusTime ? _focusDuration : _breakDuration;
-    double progress = 1.0 - (_remainingSeconds / currentDuration);
-    return progress.clamp(0.0, 1.0); // Ensure progress is within bounds
-  }
-
-  void _startTimer() {
-    if (_isRunning) return; // Avoid duplicate timers
-
-    setState(() {
-      _isRunning = true;
-    });
-
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_remainingSeconds > 0) {
-          _remainingSeconds--;
-        } else {
-          _stopTimer();
-          _toggleTimerMode(); // Switch between focus and break
-        }
-      });
-    });
-  }
-
-  void _toggleTimerMode() {
-    setState(() {
-      _isFocusTime = !_isFocusTime;
-      // _isRunning=true;
-      _remainingSeconds = _isFocusTime ? _focusDuration : _breakDuration;
-    });
-    print(_isRunning);
-    if (!_isRunning) _startTimer(); // Restart timer if it was running
-  }
-
-  void _stopTimer() {
-    setState(() {
-      _isRunning = false;
-    });
-    _timer?.cancel();
-  }
-
-  void _resetTimer() {
-    _stopTimer();
-    setState(() {
-      _isFocusTime = true; // Reset to focus time
-      _remainingSeconds = _focusDuration;
-    });
-  }
 
   void _setupOnboarding() {
     _onboardingService.startOnboarding(context);
@@ -101,7 +37,7 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
         targetKey: studyInfo,
         title: 'Study',
         description:
-            'This Study page uses the Pomodoro Technique for effective focus 25 min Focused study session 5 min Short break.',
+        'This Study page uses the Pomodoro Technique for effective focus 25 min Focused study session 5 min Short break.',
         icon: Icons.timer_outlined,
         shape: HighlightShape.rectangle,
       ),
@@ -139,24 +75,18 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
       _setupOnboarding();
       _setTourTheme();
     });
-    // TODO: implement initState
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).colorScheme;
+    final timerService = Provider.of<PomodoroTimerService>(context);
 
     return Scaffold(
       backgroundColor: themeData.background,
       body: Container(
-        margin: EdgeInsets.all(15),
+        margin: const EdgeInsets.all(15),
         child: ListView(
           children: [
             Row(
@@ -172,7 +102,7 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
                 ),
                 Tooltip(
                   message:
-                      'This Study page uses the Pomodoro Technique for effective focus 25 min Focused study session 5 min Short break.',
+                  'This Study page uses the Pomodoro Technique for effective focus 25 min Focused study session 5 min Short break.',
                   child: IconButton(
                     key: studyInfo,
                     onPressed: () {},
@@ -187,109 +117,106 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
             ReusableText(
               FromTop: 0,
               FromBottom: 50,
-              TextString: _isFocusTime
+              TextString: timerService.isFocusTime
                   ? 'Focus for 25 minutes'
                   : 'Take a break for 5 minutes',
               FontSize: 18,
               TextColor: themeData.onPrimary,
             ),
-            SizedBox(height: 80),
+            const SizedBox(height: 80),
 
-            //
+            // Timer Progress Indicator
             CircularPercentIndicator(
               radius: 100.0,
               lineWidth: 8.0,
-              percent: _progress,
+              percent: timerService.progress,
               circularStrokeCap: CircularStrokeCap.round,
               center: ReusableText(
-                TextString: _formattedTime,
+                TextString: timerService.formattedTime,
                 FontSize: 48,
                 TextColor: themeData.primary,
               ),
-              progressColor: _isFocusTime ? Colors.blue : Colors.green,
+              progressColor: timerService.isFocusTime ? Colors.blue : Colors.green,
               backgroundColor: Colors.blue.shade100,
             ),
 
-            //
-            SizedBox(height: 10),
-            _isFocusTime
-                ? _isRunning
-                    ? Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: reusableButtonContainer(context, "Pause",
-                                    Colors.blue, Colors.white),
-                              ),
-                              Expanded(
-                                child: reusableButtonContainer(context, 'Reset',
-                                    Colors.white, Colors.black),
-                              ),
-                            ],
-                          ),
-                          reusableButtonContainer(context, 'Complete Early',
-                              Colors.white, Colors.black)
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          const SizedBox(height: 40.0),
-                          Container(
-                            key: !_isRunning ? startInfo : null,
-                            child: reusableButtonContainer(
-                                context,
-                                _isRunning ? 'Pause' : 'Start',
-                                Colors.blue,
-                                Colors.white),
-                          ),
-                          const SizedBox(height: 10.0),
-                        ],
-                      )
-                : BreakTimeWidget()
+            const SizedBox(height: 10),
+            timerService.isFocusTime
+                ? timerService.isRunning
+                ? Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildActionButton(
+                          context, "Pause", Colors.blue, Colors.white,
+                          onTap: () => timerService.stopTimer()),
+                    ),
+                    Expanded(
+                      child: _buildActionButton(
+                          context, 'Reset', Colors.white, Colors.black,
+                          onTap: () => timerService.resetTimer()),
+                    ),
+                  ],
+                ),
+                _buildActionButton(
+                    context, 'Complete Early', Colors.white, Colors.black,
+                    onTap: () => timerService.completeEarly()),
+              ],
+            )
+                : Column(
+              children: [
+                const SizedBox(height: 40.0),
+                Container(
+                  key: !timerService.isRunning ? startInfo : null,
+                  child: _buildActionButton(
+                      context,
+                      timerService.isRunning ? 'Pause' : 'Start',
+                      Colors.blue,
+                      Colors.white,
+                      onTap: () => timerService.isRunning
+                          ? timerService.stopTimer()
+                          : timerService.startTimer()),
+                ),
+                const SizedBox(height: 10.0),
+              ],
+            )
+                : _buildBreakTimeWidget(context, timerService),
           ],
         ),
       ),
     );
   }
 
-  Widget reusableButtonContainer(
-      BuildContext context, String content, Color contColor, Color txtColor) {
+  Widget _buildActionButton(
+      BuildContext context,
+      String content,
+      Color contColor,
+      Color txtColor, {
+        required VoidCallback onTap,
+      }) {
     return InkWell(
-      onTap: () {
-        if (content == "Reset") {
-          _resetTimer();
-        } else if (content == "Pause" || content == "Start") {
-          _isRunning ? _stopTimer() : _startTimer();
-        } else if (content == "Complete Early") {
-          _toggleTimerMode(); // Switch to break early
-        } else if (content == "Start New Session") {
-          _resetTimer(); // Reset to focus time
-          _startTimer();
-        } else {
-          Navigator.pushNamedAndRemoveUntil(
-              context, "/index_page", (predicate) => true);
-        }
-      },
+      onTap: onTap,
       child: Container(
-        constraints: BoxConstraints(minWidth: double.infinity),
-        margin: EdgeInsets.only(top: 20, right: 3, left: 3),
+        constraints: const BoxConstraints(minWidth: double.infinity),
+        margin: const EdgeInsets.only(top: 20, right: 3, left: 3),
         height: 55,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: contColor,
-            border: Border.all(color: Colors.grey.shade300)),
+          borderRadius: BorderRadius.circular(10),
+          color: contColor,
+          border: Border.all(color: Colors.grey.shade300),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             content == "Pause"
                 ? Icon(Icons.pause, color: Colors.white)
                 : content == "Start"
-                    ? Icon(Icons.play_arrow, color: Colors.white)
-                    : content == "Complete Early"
-                        ? Icon(Icons.check, color: Colors.blue)
-                        : SizedBox(),
-            SizedBox(width: 10),
+                ? Icon(Icons.play_arrow, color: Colors.white)
+                : content == "Complete Early"
+                ? Icon(Icons.check, color: Colors.blue)
+                : const SizedBox(),
+            const SizedBox(width: 10),
             Center(
               child: ReusableText(
                 TextColor: txtColor,
@@ -304,7 +231,8 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
     );
   }
 
-  Widget BreakTimeWidget() {
+  Widget _buildBreakTimeWidget(
+      BuildContext context, PomodoroTimerService timerService) {
     return Column(
       children: [
         ReusableText(
@@ -316,7 +244,7 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
           TextFontWeight: FontWeight.bold,
         ),
         Container(
-          margin: EdgeInsets.only(top: 20, bottom: 20),
+          margin: const EdgeInsets.only(top: 20, bottom: 20),
           height: 80,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -342,11 +270,19 @@ class _PomodoroTimerPageState extends State<PomodoroTimerPage> {
           TextFontWeight: FontWeight.w500,
         ),
         const SizedBox(height: 20.0),
-        reusableButtonContainer(
-            context, 'Start New Session', Colors.blue, Colors.white),
+        _buildActionButton(
+            context, 'Start New Session', Colors.blue, Colors.white,
+            onTap: () {
+              timerService.resetTimer();
+              timerService.startTimer();
+            }),
         const SizedBox(height: 10.0),
-        reusableButtonContainer(
-            context, "Back To Dashboard", Colors.white, Colors.black54),
+        _buildActionButton(
+            context, "Back To Dashboard", Colors.white, Colors.black54,
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/index_page", (predicate) => true);
+            }),
       ],
     );
   }

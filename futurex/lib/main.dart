@@ -6,6 +6,7 @@ import 'package:futurex/features/pages/AI_page/ai_service.dart';
 import 'package:futurex/features/pages/home/home_page.dart';
 import 'package:futurex/route_handler/pages.dart';
 import 'package:futurex/services/global.dart';
+import 'package:futurex/services/pomodoro_study_provider.dart';
 import 'package:futurex/services/theme_mode_provider.dart';
 import 'package:futurex/utils/color_collections.dart';
 import 'package:futurex/utils/theme.dart';
@@ -83,6 +84,7 @@ class _MyAppState extends State<MyApp> {
         child: MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (_) => ThemeManager()),
+            ChangeNotifierProvider(create: (_) => PomodoroTimerService()),
           ],
           builder: (BuildContext context, child) =>
               MultiBlocProvider(
